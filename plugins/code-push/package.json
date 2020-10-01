@@ -1,0 +1,55 @@
+{
+  "_from": "code-push@3.0.1",
+  "_id": "code-push@3.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-1tSLHhEqSRSLIkSwITr68/gYZFs=",
+  "_location": "/code-push",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "code-push@3.0.1",
+    "name": "code-push",
+    "escapedName": "code-push",
+    "rawSpec": "3.0.1",
+    "saveSpec": null,
+    "fetchSpec": "3.0.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/code-push/download/code-push-3.0.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcode-push%2Fdownload%2Fcode-push-3.0.1.tgz",
+  "_shasum": "d6d48b1e112a49148b2244b0213afaf3f818645b",
+  "_spec": "code-push@3.0.1",
+  "_where": "/Users/euros/Downloads/myApp1",
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "bugs": {
+    "url": "https://github.com/Microsoft/code-push/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "q": "^1.4.1",
+    "recursive-fs": "^1.1.2",
+    "slash": "3.0.0",
+    "superagent": "^5.1.0",
+    "superagent-proxy": "^2.0.0",
+    "yazl": "^2.4.1"
+  },
+  "deprecated": false,
+  "description": "Management SDK for the CodePush service",
+  "homepage": "https://microsoft.github.io/code-push",
+  "license": "MIT",
+  "main": "script/index.js",
+  "name": "code-push",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/code-push.git"
+  },
+  "scripts": {
+    "test": "gulp"
+  },
+  "version": "3.0.1"
+}

@@ -1,0 +1,8 @@
+node_modules/
+platforms/
+.idea/
+package-lock.json
+app/node_modules/
+app/.idea/
+app/package-lock.json
+

@@ -1,0 +1,87 @@
+{
+  "_from": "cordova-plugin-code-push@latest",
+  "_id": "cordova-plugin-code-push@1.13.1",
+  "_inBundle": false,
+  "_integrity": "sha1-hDQej6CgUHojcG5Xt99Rom6bbYE=",
+  "_location": "/cordova-plugin-code-push",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-code-push@latest",
+    "name": "cordova-plugin-code-push",
+    "escapedName": "cordova-plugin-code-push",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/cordova-plugin-code-push/download/cordova-plugin-code-push-1.13.1.tgz",
+  "_shasum": "84341e8fa0a0507a23706e57b7df51a26e9b6d81",
+  "_spec": "cordova-plugin-code-push@latest",
+  "_where": "/Users/euros/Downloads/myApp1",
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "bugs": {
+    "url": "https://github.com/Microsoft/cordova-plugin-code-push/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-code-push",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "CodePush Plugin for Apache Cordova",
+  "devDependencies": {
+    "@types/assert": "^1.4.2",
+    "@types/cordova": "0.0.34",
+    "@types/cordova-plugin-device": "^1.1.5",
+    "@types/cordova-plugin-dialogs": "^1.3.2",
+    "@types/cordova-plugin-file": "^0.0.3",
+    "@types/mkdirp": "^0.5.2",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.3",
+    "@types/power-assert": "^1.5.0",
+    "@types/q": "^1.5.2",
+    "archiver": "^3.0.0",
+    "body-parser": "^1.19.0",
+    "del": "^5.0.0",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "gulp-insert": "^0.5.0",
+    "gulp-tslint": "^8.1.4",
+    "gulp-typescript": "^5.0.1",
+    "mkdirp": "^0.5.1",
+    "mocha": "^6.1.4",
+    "mocha-junit-reporter": "^1.23.1",
+    "q": "^1.5.1",
+    "replace": "^1.2.0",
+    "run-sequence": "^2.2.1",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
+  },
+  "homepage": "https://github.com/Microsoft/cordova-plugin-code-push#readme",
+  "keywords": [
+    "cordova",
+    "code",
+    "push",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-code-push",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/cordova-plugin-code-push.git"
+  },
+  "types": "./typings/codePush.d.ts",
+  "version": "1.13.1"
+}

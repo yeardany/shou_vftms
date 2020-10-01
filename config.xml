@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.apache.cordova.myApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TestApp</name>
+    <description>
+        Test APP
+    </description>
+    <content src="index.html" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <preference name="android-minSdkVersion" value="21" />
+    <platform name="android">
+        <icon src="res/android/icon/icon.png" />
+        <icon density="mdpi" src="res/android/icon/mipmap-mdpi/ic_launcher.png" />
+        <icon density="hdpi" src="res/android/icon/mipmap-hdpi/ic_launcher.png" />
+        <icon density="xhdpi" src="res/android/icon/mipmap-xhdpi/ic_launcher.png" />
+        <icon density="xxhdpi" src="res/android/icon/mipmap-xxhdpi/ic_launcher.png" />
+        <icon density="xxxhdpi" src="res/android/icon/mipmap-xxxhdpi/ic_launcher.png" />
+        <splash density="hdpi" src="res/android/splash/drawable-port-hdpi/screen.png" />
+        <splash density="port-hdpi" src="res/android/splash/drawable-port-hdpi/screen.png" />
+        <splash density="ldpi" src="res/android/splash/drawable-port-ldpi/screen.png" />
+        <splash density="port-ldpi" src="res/android/splash/drawable-port-ldpi/screen.png" />
+        <splash density="mdpi" src="res/android/splash/drawable-port-mdpi/screen.png" />
+        <splash density="port-mdpi" src="res/android/splash/drawable-port-mdpi/screen.png" />
+        <splash density="xhdpi" src="res/android/splash/drawable-port-xhdpi/screen.png" />
+        <splash density="port-xhdpi" src="res/android/splash/drawable-port-xhdpi/screen.png" />
+        <splash density="xxhdpi" src="res/android/splash/drawable-port-xxhdpi/screen.png" />
+        <splash density="port-xxhdpi" src="res/android/splash/drawable-port-xxhdpi/screen.png" />
+        <splash density="xxxhdpi" src="res/android/splash/drawable-port-xxxhdpi/screen.png" />
+        <splash density="port-xxxhdpi" src="res/android/splash/drawable-port-xxxhdpi/screen.png" />
+    </platform>
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="android">
+        <preference name="CodePushDeploymentKey" value="MjExqqiMciZO-zcTm1RnCj6hfNvP_Gouuen8f" />
+    </platform>
+    <plugin name="cordova-plugin-crosswalk-webview" spec="^2.4.0">
+        <variable name="XWALK_VERSION" value="23+" />
+        <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
+        <variable name="XWALK_COMMANDLINE" value="--disable-pull-to-refresh-effect" />
+        <variable name="XWALK_MODE" value="embedded" />
+        <variable name="XWALK_MULTIPLEAPK" value="true" />
+    </plugin>
+    <plugin name="jpush-phonegap-plugin" spec="^3.7.6">
+        <variable name="APP_KEY" value="aee5dd8a5c188f15563ba563" />
+        <variable name="CHANNEL" value="developer-default" />
+    </plugin>
+    <plugin name="cordova-plugin-code-push" spec="^1.13.1" />
+    <engine name="android" spec="^8.1.0" />
+</widget>
