@@ -9,8 +9,6 @@
 + 安装 `Java`，配置环境变量
 + `Android Studio` sdk版本为 Android 9，配置环境变量 `ANDROID_SDK_ROOT`
 + 安装 `gradle`
-+ `cordova plugin remove cordova-plugin-crosswalk-webview`
-+ `cordova plugin add cordova-plugin-crosswalk-webview`
 + `cordova platform add android@8.0` 
 
 ## 开发预览
@@ -21,4 +19,4 @@
 ## 上线编译
 + `cd app && npm run build`
 + 修改 `platforms` 目录下 `build.gradle`
-+ `cd .. && cordova build android`
++ `cd .. && cordova build android` 或 使用 `Android Studio` 打开 `platforms` 下的 `android`
