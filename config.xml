@@ -52,5 +52,5 @@
         <variable name="CHANNEL" value="developer-default" />
     </plugin>
     <plugin name="cordova-plugin-code-push" spec="^1.13.1" />
-    <engine name="android" spec="^8.1.0" />
+    <engine name="android" spec="^8.0.0" />
 </widget>

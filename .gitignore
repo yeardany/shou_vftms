@@ -1,8 +1,9 @@
-node_modules/
-platforms/
-.idea/
+node_modules
+platforms
+plugins
 package-lock.json
-app/node_modules/
-app/.idea/
+app/node_modules
+app/.idea
 app/package-lock.json
 
+.idea/*
