@@ -9,7 +9,7 @@
 + 安装 `Java`，配置环境变量
 + `Android Studio` sdk版本为 Android 9，配置环境变量 `ANDROID_SDK_ROOT`
 + 安装 `gradle`
-+ `cordova platform add android@8.0` 
++ `cordova platform add android@8.0` 第一次添加可能会报插件添加错误，删除 `plugins` 中内容后 `cordova platform remove android` 再重新添加即可
 
 ## 开发预览
 + `cd app && npm install`
