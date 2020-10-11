@@ -15,6 +15,8 @@ import Login from '../views/login/login.vue'
 import Weather from '../views/weather/weather.vue'
 import WeatherDetail from '../views/weather/weatherDetail.vue'
 
+import ChartTest from '../views/environment/chartTest.vue'
+
 export default [
   {
     path: '/',
@@ -40,6 +42,10 @@ export default [
       {
         path: 'enTem',
         component: EnvironmentTemperature
+      },
+      {
+        path: 'chartTest',
+        component: ChartTest
       }
     ]
   },
