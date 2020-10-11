@@ -2,6 +2,8 @@ import Camera from '../views/camera/camera.vue'
 import CameraDetail from '../views/camera/cameraDetail.vue'
 import FishCamera from '../views/camera/fishCamera.vue'
 import IslandCamera from '../views/camera/islandCamera.vue'
+import EquipmentCamera from '../views/camera/equipmentCamera.vue'
+import Map from '../views/camera/Map.vue'
 import Environment from '../views/environment/environment.vue'
 import EnvironmentDetail from '../views/environment/environmentDetail.vue'
 import EnvironmentO2 from '../views/environment/environmentO2.vue'
@@ -23,6 +25,10 @@ export default [
   {
     path: '/cameraDetail',
     component: CameraDetail
+  },
+  {
+    path: '/Map',
+    component: Map
   },
   {
     path: '/environmentDetail',
@@ -60,6 +66,10 @@ export default [
           {
             path: 'island',
             component: IslandCamera
+          },
+          {
+            path:'equipment',
+            component: EquipmentCamera
           }
         ]
       },

@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.fullPath === '/home/camera/fishery' || to.fullPath === '/home/camera/island')
+      if (to.fullPath === '/home/camera/fishery' || to.fullPath === '/home/camera/island' || to.fullPath === '/home/camera/equipment')
         this.toPath = to.fullPath
     }
   }
