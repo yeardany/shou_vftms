@@ -3,7 +3,6 @@ import CameraDetail from '../views/camera/cameraDetail.vue'
 import FishCamera from '../views/camera/fishCamera.vue'
 import IslandCamera from '../views/camera/islandCamera.vue'
 import EquipmentCamera from '../views/camera/equipmentCamera.vue'
-import Map from '../views/camera/Map.vue'
 import Environment from '../views/environment/environment.vue'
 import EnvironmentDetail from '../views/environment/environmentDetail.vue'
 import EnvironmentO2 from '../views/environment/environmentO2.vue'
@@ -12,6 +11,7 @@ import EnvironmentTemperature from '../views/environment/environmentTemperature.
 import Home from '../views/home/home.vue'
 import Inspect from '../views/inspect/inspect.vue'
 import InspectDetail from '../views/inspect/inspectDetail.vue'
+import Map from '../views/camera/Map.vue'
 import NewInspect from '../views/inspect/newInspect.vue'
 import Login from '../views/login/login.vue'
 import Weather from '../views/weather/weather.vue'
@@ -27,10 +27,6 @@ export default [
   {
     path: '/cameraDetail',
     component: CameraDetail
-  },
-  {
-    path: '/Map',
-    component: Map
   },
   {
     path: '/environmentDetail',
@@ -66,16 +62,16 @@ export default [
         redirect: '/home/camera/fishery',
         children: [
           {
+            path:'equipment',
+            component: EquipmentCamera
+          },
+          {
             path: 'fishery',
             component: FishCamera
           },
           {
             path: 'island',
             component: IslandCamera
-          },
-          {
-            path:'equipment',
-            component: EquipmentCamera
           }
         ]
       },
@@ -96,6 +92,10 @@ export default [
   {
     path: '/inspectDetail',
     component: InspectDetail
+  },
+  {
+    path: '/map',
+    component: Map
   },
   {
     path: '/newInspect',
