@@ -23,6 +23,24 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/heatmap'
 
+var x0=30.66,y0=122.20,x=30.78,y=122.32;
+var angle=45,dist=3.14;
+
+var R = 6371.14;//地球半径 单位km
+function rad(r){
+  return r * 3.1415926 / 180.0;
+}
+function getDistance(x0,y0,x,y){
+  x0 = rad(x0);
+  y0 = rad(y0);
+  x = rad(x);
+  y = rad(y);
+  var lng = y - y0;
+  d = R * Math.acos(Math.cos(x) * Math.cos(x0) * Math.cos(lng) + Math.sin(x0) * Math.sin(x));
+  return d;
+}
+dist = getDistance(x0,y0,x,y);
+
 var noise = getNoiseHelper();
 noise.seed(Math.random());
 
@@ -154,13 +172,16 @@ export default {
       // 定义图表，各种参数
       option1: {
         title: {
-          text: '1号设备海上定位'
+          text: '1号设备海上定位\n'+
+            '标准位置: '+x0+'°N,'+y0+'°E\n'+
+            '实际位置: '+x+'°N,'+y+'°E'
         },
         radiusAxis: {
-          max: 1,
-          min: 0
+          max: 20
         },
-        polar: {},
+        polar: {
+          center: ['60%', '50%']
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -175,7 +196,7 @@ export default {
           coordinateSystem: 'polar',
           name: '偏移度',
           type: 'scatter',
-          data: [[0.314, 45]]
+          data: [[0,0],[dist, angle]]
         }]
       },
       option2: {
