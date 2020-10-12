@@ -1,7 +1,7 @@
 <template>
   <van-row>
     <van-col span="24">
-      <v-chart :options="polar"/>
+      <v-chart :options="polar" :style="{width: containerWidth + 'px',height: containerWidth + 'px'}"/>
     </van-col>
   </van-row>
 </template>
@@ -22,8 +22,8 @@ export default {
   name: "chartTest",
   data() {
     return {
+      containerWidth: window.screen.width,
       polar: {
-        tooltip: {},
         visualMap: {
           max: 20,
           inRange: {
@@ -42,6 +42,9 @@ export default {
           type: 'value'
         },
         grid3D: {
+          viewControl: {
+            distance: 300
+          },
           boxWidth: 200,
           boxDepth: 80,
           light: {
