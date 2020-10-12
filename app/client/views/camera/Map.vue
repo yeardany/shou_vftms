@@ -31,6 +31,10 @@ function rad(r) {
   return r * 3.1415926 / 180.0;
 }
 
+function r_rad(x) {
+  return x * 180.0 / 3.1415926;
+}
+
 function getDistance(x0, y0, x, y) {
   x0 = rad(x0);
   y0 = rad(y0);
@@ -42,6 +46,9 @@ function getDistance(x0, y0, x, y) {
 }
 
 dist = getDistance(x0, y0, x, y);
+// 已知斜边dist，再求对边s_dist，用arcsin函数求角度
+var s_dist = getDistance(x0, y, x, y);
+angle = r_rad(Math.asin(s_dist / dist)).toFixed(2);
 
 var noise = getNoiseHelper();
 noise.seed(Math.random());
