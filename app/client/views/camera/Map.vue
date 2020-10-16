@@ -9,7 +9,7 @@
       </template>
     </NavBar>
     <template>
-      <span>{{ locationDescribe }}</span>
+      <b><span v-html="locationDescribe"></span></b>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px'}" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
     </template>
@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       containerWidth: window.screen.width,
-      locationDescribe: `1号设备海上定位标准位置${init.x0}°N,${init.y0}°E,实际位置${init.x}°N,${init.y}°E`,
+      locationDescribe: `1号设备海上定位：</br>标准位置${init.x0}°N,${init.y0}°E,</br>实际位置${init.x}°N,${init.y}°E`,
       // 定义图表，各种参数
       option1: {
         radiusAxis: {
@@ -154,4 +154,8 @@ export default {
 }
 </script>
 <style scoped>
+span {
+  display: block;
+  padding: 0 3%
+}
 </style>
