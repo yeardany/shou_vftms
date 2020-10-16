@@ -24,17 +24,17 @@ class LocationCompute {
     return this.r_radVal
   }
 
+  getCoordinate(t) {
+    this.rad = t
+    return this.rad
+  }
+
   getDistance(a, b, c, d) {
-    let x0, y0, x, y, lng
-    this.rad = a
-    x0 = this.rad
-    this.rad = b
-    y0 = this.rad
-    this.rad = c
-    x = this.rad
-    this.rad = d
-    y = this.rad
-    lng = y - y0;
+    let x0 = this.getCoordinate(a),
+      y0 = this.getCoordinate(b),
+      x = this.getCoordinate(c),
+      y = this.getCoordinate(d),
+      lng = y - y0;
     return this.R * Math.acos(Math.cos(x) * Math.cos(x0) * Math.cos(lng) + Math.sin(x0) * Math.sin(x));
   }
 
