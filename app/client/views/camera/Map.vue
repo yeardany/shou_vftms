@@ -9,9 +9,7 @@
       </template>
     </NavBar>
     <template>
-      <label for="">{{ location1 }}</label><br>
-      <label for="">{{ location2 }}</label><br>
-      <label for="">{{ location3 }}</label>
+      <span>{{ locationDescribe }}</span>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px'}" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
     </template>
@@ -23,94 +21,60 @@ import NavBar from '../../layout/NavBar.vue'
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/heatmap'
+import LocationCompute from '../../utils/locationCompute'
 
-let x0 = 30.66, y0 = 122.20, x = 30.99, y = 121.87;
-//  30.33 < x < 30.99  121.87 < y < 122.53   距离大约在50km之内
-let angle = 45, dist = 3.14;
+let init = new LocationCompute(30.66, 122.20, 30.99, 121.87, 6371.14),
+  // 已知斜边dist，再求对边s_dist，用 ArcSin 函数求角度
+  dist = init.getDistance(init.x0, init.y0, init.x, init.y) || 3.14,
+  s_dist = init.getDistance(init.x0, init.y, init.x, init.y);
+init.r_rad = Math.asin(s_dist / dist);
+let angle = init.r_rad.toFixed(2) || 45,
+  angles = init.getAngles(angle),
 
-let R = 6371.14;//地球半径 单位km
-function rad(r) {
-  return r * 3.1415926 / 180.0;
-}
+  data_loc = [[30.402312, 121.98312], [30.404635, 121.9867565], [30.4076786, 121.9883725], [30.4076786, 121.9883725],
+    [30.4154325, 122.003232], [30.4159123, 122.004534], [30.454523, 122.084534], [30.459123, 122.08434], [30.557123, 122.14439],
+    [30.66423, 122.203223], [30.6631, 122.20231], [30.66231, 122.2034], [30.662311, 122.20375], [30.66232, 122.20546],
+    [30.66232, 122.20543], [30.6632, 122.20546]],
 
-function r_rad(x) {
-  return x * 180.0 / 3.1415926;
-}
+  heatMapData = () => {
+    let data = [];
+    for (let i = -50; i <= 50; i++)
+      for (let j = -50; j <= 50; j++)
+        data[i, j] = 0;
 
-function getDistance(x0, y0, x, y) {
-  x0 = rad(x0);
-  y0 = rad(y0);
-  x = rad(x);
-  y = rad(y);
-  let lng = y - y0,
-    d = R * Math.acos(Math.cos(x) * Math.cos(x0) * Math.cos(lng) + Math.sin(x0) * Math.sin(x));
-  return d;
-}
+    for (let i = 0; i < data_loc.length - 1; i++) {
+      let x = data_loc[i][1].toFixed(2);
+      let y = data_loc[i][0].toFixed(2);
+      let m_x = init.getDistance(init.x0, init.y0, init.x, init.y0);
+      let m_y = init.getDistance(init.x0, init.y0, init.x0, init.y);
+      m_x = Math.floor(m_x);
+      m_y = Math.floor(m_y);
+      if (x > init.x0 && y < init.y0) {
+        m_y = -m_y;
+      } else if (x < init.x0 && y < init.y0) {
+        m_x = -m_x;
+        m_y = -m_y;
+      } else if (x < init.x0 && y > init.y0) {
+        m_x = -m_x;
+      }
+      data[m_x, m_y] += 1;
+      //求二维数组最大值
+      var max = 0;
 
-dist = getDistance(x0, y0, x, y);
-// 已知斜边dist，再求对边s_dist，用arcsin函数求角度
-let s_dist = getDistance(x0, y, x, y);
-angle = r_rad(Math.asin(s_dist / dist)).toFixed(2);
-var angles = 0;
-console.log(angle);
-if (x < x0 && y > y0){
-  angles = (parseFloat(angle)+90).toFixed(2);
-  console.log(angles);
-}
-else if (x < x0 && y < y0){
-  angles = (parseFloat(angle)+180).toFixed(2);
-  console.log(angles);
-}
-else if (x > x0 && y < y0){
-  angles = (parseFloat(angle)+270).toFixed(2);
-  console.log(angles);
-}
-
-let data_loc = [[30.402312, 121.98312], [30.404635, 121.9867565], [30.4076786, 121.9883725],[30.4076786, 121.9883725],
-  [30.4154325, 122.003232],[30.4159123, 122.004534],[30.454523, 122.084534],[30.459123, 122.08434],[30.557123, 122.14439]
-   [30.66423, 122.203223], [30.6631, 122.20231], [30.66231, 122.2034], [30.662311, 122.20375], [30.66232, 122.20546],
-  [30.66232, 122.20543], [30.6632, 122.20546]],
-
-data = () => {
-  let data = [];
-  for (let i = -50; i <= 50; i++)
-    for (let j = -50; j <= 50; j++)
-      data[i, j] = 0;
-
-  for (let i = 0; i < data_loc.length; i++) {
-    let x =data_loc[i][1].toFixed(2);
-    let y =data_loc[i][0].toFixed(2);
-    let m_x = getDistance(x0,y0,x,y0);
-    let m_y = getDistance(x0,y0,x0,y);
-    m_x = Math.floor(m_x);
-    m_y = Math.floor(m_y);
-    if (x > x0 && y < y0){
-      m_y = -m_y;
     }
-    else if (x < x0 && y < y0){
-      m_x = -m_x;
-      m_y = -m_y;
-    }
-    else if (x < x0 && y > y0) {
-      m_x = -m_x;
-    }
-    data[m_x,m_y] += 1;
-    //求二维数组最大值
-    var max = 0;
-    for(let i=-50;i<50;i++)
-      for(let j=-50;j<50;j++){
-        if(data[i][j]>max)
+    for (let i = -50; i < 50; i++)
+      for (let j = -50; j < 50; j++) {
+        if (data[i][j] > max)
           max = data[i][j];
       }
-  }
 
-  let final_data = [];
-  //数组归一化
-  for(let i=-50;i<50;i++)
-    for(let j=-50;j<50;j++)
-      final_data.push([i,j,data[i][j]/max]);
-  return final_data;
-}
+    let final_data = [];
+    //数组归一化
+    for (let i = -50; i < 50; i++)
+      for (let j = -50; j < 50; j++)
+        final_data.push([i, j, data[i][j] / max]);
+    return final_data;
+  }
 
 export default {
   name: "Map",
@@ -121,9 +85,7 @@ export default {
   data() {
     return {
       containerWidth: window.screen.width,
-      location1 : '1号设备海上定位',
-      location2 : '标准位置: ' + x0 + '°N,' + y0 + '°E',
-      location3 : '实际位置: ' + x + '°N,' + y + '°E',
+      locationDescribe: `1号设备海上定位标准位置${init.x0}°N,${init.y0}°E,实际位置${init.x}°N,${init.y}°E`,
       // 定义图表，各种参数
       option1: {
         radiusAxis: {
@@ -174,9 +136,9 @@ export default {
           name: 'Gaussian',
           type: 'heatmap',
           itemStyle: {
-            opacity : 0.6
+            opacity: 0.6
           },
-          data: data(),
+          data: heatMapData(),
           emphasis: {
             itemStyle: {
               borderColor: '#000',
