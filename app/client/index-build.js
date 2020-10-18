@@ -106,6 +106,7 @@ let app = {
 
   updateCheck: function (remotePackage) {
     if (!remotePackage) {
+      window.codePush.notifyApplicationReady()
       app.notify('primary', 2000, "已是最新版")
     } else {
       if (!remotePackage.failedInstall) {
