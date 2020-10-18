@@ -10,8 +10,9 @@
     </NavBar>
     <template>
       <b><span v-html="locationDescribe"></span></b>
-      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px'}" :options="option1"/>
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option3"/>
     </template>
   </div>
 </template>
@@ -30,7 +31,6 @@ let init = new LocationCompute(30.66, 122.20, 30.99, 121.87, 6371.14),
 init.r_rad = Math.asin(s_dist / dist);
 let angle = init.r_rad.toFixed(2),
   angles = init.getAngles(angle),
-
   data_loc =
     [[30.4023, 121.98073],[30.40465, 121.98275],[30.40766, 121.98337],[30.40896, 121.98575],[30.40996, 121.98915],
     [30.41112, 121.99232],[30.41303, 121.99315],[30.41486, 121.99535],[30.41586, 121.99625],[30.41778, 121.99751],
@@ -53,8 +53,12 @@ let angle = init.r_rad.toFixed(2),
     [30.65223, 122.18434],[30.65453, 122.18434],[30.65893, 122.18634],[30.65933, 122.19134],[30.65993, 122.19934],
     [30.66412, 122.20446],[30.66492, 122.20543],[30.66512, 122.20546],[30.66712, 122.20546],[30.66812, 122.20546]],
 
-  heatMapData = () => {
+  xy_data = [],
+  time = [],
+  date = '16:40',
+  loc = [],
 
+  heatMapData = () => {
     let data = [];
     for (let i = -50; i <= 50; i++){
       data[i] = [];
@@ -62,15 +66,12 @@ let angle = init.r_rad.toFixed(2),
         data[i][j] = 0;
     }
 
-    console.log(data_loc.length)
     for (let i = 0; i < data_loc.length ; i++) {
       let x = data_loc[i][1].toFixed(2);
       let y = data_loc[i][0].toFixed(2);
-      console.log('x:'+x+',y:'+y)
       let m_x = init.getDistance(init.x0, init.y0, init.x0, x);
       let m_y = init.getDistance(init.x0, init.y0, y, init.y0);
-      m_x = Math.floor(m_x);
-      m_y = Math.floor(m_y);
+      //定位方向
       if (x > init.y0 && y < init.x0) {
         m_y = -m_y;
       } else if (x < init.y0 && y < init.x0) {
@@ -79,8 +80,20 @@ let angle = init.r_rad.toFixed(2),
       } else if (x < init.y0 && y > init.x0) {
         m_x = -m_x;
       }
+      //取折线图数据
+      if(i%5==0){
+        var xy_loc = y+'°N,'+x+'°E';
+        xy_data.push([m_x.toFixed(2),m_y.toFixed(2)]);
+        loc.push([m_x.toFixed(2),xy_loc]);
+        time.push([m_x.toFixed(2),date]);
+/*        console.log(loc)
+        console.log(xy_data)
+        console.log(time)*/
+      }
+      //取整
+      m_x = Math.floor(m_x);
+      m_y = Math.floor(m_y);
       data[m_x][m_y] += 1;
-      console.log('取整定向后距离标准点横纵向距离：'+m_x+','+m_y)
     }
     //求二维数组最大值
     var max = 0;
@@ -90,8 +103,6 @@ let angle = init.r_rad.toFixed(2),
           max = data[i][j];
       }
 
-    console.log('最大值'+max)
-
     let final_data = [];
     //数组归一化
     for (let i = -50; i < 50; i++){
@@ -99,13 +110,10 @@ let angle = init.r_rad.toFixed(2),
         final_data.push([i, j, data[i][j] / max]);
     }
 
-/*    console.log(final_data[0][0])
-    console.log(final_data)*/
-    for (let i = 0; i < 10000; i++){
+/*    for (let i = 0; i < 10000; i++){
         if (final_data[i][2] != 0)
           console.log('非零坐标'+'('+final_data[i][0]+','+final_data[i][1]+') 的值是'+final_data[i][2])
-      }
-
+      }*/
     return final_data;
   }
 
@@ -146,6 +154,9 @@ export default {
         }]
       },
       option2: {
+        title: {
+          text: '设备偏移情况热力图'
+        },
         tooltip: {},
         xAxis: {
           type: 'value',
@@ -181,6 +192,63 @@ export default {
           progressive: 100, //渲染频率
           animation: false //动画
         }]
+      },
+      option3:{
+        title: {
+          text: '设备随时间位置变化图'
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: function (params) {
+            var htmlStr = '';
+            for(var i=0;i<params.length;i++){
+              var param = params[i];
+              if(i==1){
+                htmlStr += '设备移动至此处时间为' + param.value[1];
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              }
+              else if(i==2)
+                htmlStr += '设备移动至此处坐标为(' + param.value[1] + ')';
+            }
+            return htmlStr;
+          }
+        },
+        xAxis: {
+          min: -50,
+          max: 50,
+          type: 'value',
+          axisLine: {onZero: true}
+        },
+        yAxis: {
+          min: -50,
+          max: 50,
+          type: 'value',
+          axisLine: {onZero: true}
+        },
+        dataZoom: [{
+            type: 'inside',
+            xAxisIndex: 0,
+            filterMode: 'empty'
+          }, {
+            type: 'inside',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+          }],
+        series: [{
+            name: 'xy_data',
+            type: 'line',
+            smooth: true,
+            symbolSize: 6,
+            data: xy_data
+          },{
+            name: 'time',
+            type: 'line',
+            data: time
+          },{
+            name: 'location',
+            type: 'line',
+            data: loc
+          }]
       }
     }
   }
