@@ -23,6 +23,7 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/heatmap'
 import LocationCompute from '../../utils/locationCompute'
+import heatMap from '../../utils/heatMap'
 
 let init = new LocationCompute(30.66, 122.20, 30.99, 121.87, 6371.14),
   // 已知斜边dist，再求对边s_dist，用 ArcSin 函数求角度
@@ -30,92 +31,7 @@ let init = new LocationCompute(30.66, 122.20, 30.99, 121.87, 6371.14),
   s_dist = init.getDistance(init.x0, init.y, init.x, init.y);
 init.r_rad = Math.asin(s_dist / dist);
 let angle = init.r_rad.toFixed(2),
-  angles = init.getAngles(angle),
-  data_loc =
-    [[30.4023, 121.98073],[30.40465, 121.98275],[30.40766, 121.98337],[30.40896, 121.98575],[30.40996, 121.98915],
-    [30.41112, 121.99232],[30.41303, 121.99315],[30.41486, 121.99535],[30.41586, 121.99625],[30.41778, 121.99751],
-    [30.41896, 122.00125],[30.42545, 122.00473],[30.42593, 122.00623],[30.42923, 122.00823],[30.43123, 122.00923],
-    [30.43253, 122.01125],[30.43523, 122.01473],[30.43923, 122.01523],[30.44423, 122.01873],[30.45793, 122.01993],
-    [30.46323, 122.02073],[30.46423, 122.02434],[30.46923, 122.02434],[30.47023, 122.02534],[30.47193, 122.02834],
-    [30.47723, 122.03134],[30.48523, 122.03434],[30.48923, 122.03734],[30.49323, 122.03734],[30.49913, 122.03734],
-    [30.50223, 122.04434],[30.51123, 122.04434],[30.51443, 122.04634],[30.51913, 122.04634],[30.52293, 122.04634],
-    [30.52423, 122.05434],[30.52753, 122.05434],[30.53193, 122.05734],[30.53933, 122.05734],[30.54493, 122.05734],
-    [30.55123, 122.06439],[30.55423, 122.06439],[30.55931, 122.06439],[30.56231, 122.06839],[30.56311, 122.06839],
-    [30.56423, 122.07434],[30.56753, 122.07434],[30.56893, 122.07534],[30.56933, 122.07534],[30.56993, 122.07934],
-    [30.57123, 122.08434],[30.57353, 122.08434],[30.57593, 122.08534],[30.57833, 122.08834],[30.57993, 122.08934],
-    [30.58123, 122.09434],[30.58353, 122.09434],[30.58593, 122.09434],[30.58833, 122.09734],[30.58993, 122.09934],
-    [30.59123, 122.10434],[30.59353, 122.10434],[30.59593, 122.10634],[30.59833, 122.10634],[30.59993, 122.10634],
-    [30.60123, 122.11434],[30.60353, 122.11434],[30.60593, 122.11434],[30.60833, 122.11734],[30.60993, 122.11934],
-    [30.61123, 122.12434],[30.61353, 122.12634],[30.61593, 122.12734],[30.61833, 122.12874],[30.61993, 122.12834],
-    [30.62123, 122.13434],[30.62353, 122.13434],[30.62593, 122.13434],[30.62833, 122.13834],[30.62993, 122.13934],
-    [30.63123, 122.14334],[30.63353, 122.14334],[30.63593, 122.14734],[30.63833, 122.14834],[30.63993, 122.15334],
-    [30.64123, 122.16134],[30.64353, 122.16134],[30.64593, 122.16934],[30.64833, 122.17134],[30.64993, 122.17834],
-    [30.65223, 122.18434],[30.65453, 122.18434],[30.65893, 122.18634],[30.65933, 122.19134],[30.65993, 122.19934],
-    [30.66412, 122.20446],[30.66492, 122.20543],[30.66512, 122.20546],[30.66712, 122.20546],[30.66812, 122.20546]],
-
-  xy_data = [],
-  time = [],
-  date = '16:40',
-  loc = [],
-
-  heatMapData = () => {
-    let data = [];
-    for (let i = -50; i <= 50; i++){
-      data[i] = [];
-      for (let j = -50; j <= 50; j++)
-        data[i][j] = 0;
-    }
-
-    for (let i = 0; i < data_loc.length ; i++) {
-      let x = data_loc[i][1].toFixed(2);
-      let y = data_loc[i][0].toFixed(2);
-      let m_x = init.getDistance(init.x0, init.y0, init.x0, x);
-      let m_y = init.getDistance(init.x0, init.y0, y, init.y0);
-      //定位方向
-      if (x > init.y0 && y < init.x0) {
-        m_y = -m_y;
-      } else if (x < init.y0 && y < init.x0) {
-        m_x = -m_x;
-        m_y = -m_y;
-      } else if (x < init.y0 && y > init.x0) {
-        m_x = -m_x;
-      }
-      //取折线图数据
-      if(i%5==0){
-        var xy_loc = y+'°N,'+x+'°E';
-        xy_data.push([m_x.toFixed(2),m_y.toFixed(2)]);
-        loc.push([m_x.toFixed(2),xy_loc]);
-        time.push([m_x.toFixed(2),date]);
-/*        console.log(loc)
-        console.log(xy_data)
-        console.log(time)*/
-      }
-      //取整
-      m_x = Math.floor(m_x);
-      m_y = Math.floor(m_y);
-      data[m_x][m_y] += 1;
-    }
-    //求二维数组最大值
-    var max = 0;
-    for (let i = -50; i < 50; i++)
-      for (let j = -50; j < 50; j++) {
-        if (data[i][j] > max)
-          max = data[i][j];
-      }
-
-    let final_data = [];
-    //数组归一化
-    for (let i = -50; i < 50; i++){
-      for (let j = -50; j < 50; j++)
-        final_data.push([i, j, data[i][j] / max]);
-    }
-
-/*    for (let i = 0; i < 10000; i++){
-        if (final_data[i][2] != 0)
-          console.log('非零坐标'+'('+final_data[i][0]+','+final_data[i][1]+') 的值是'+final_data[i][2])
-      }*/
-    return final_data;
-  }
+  angles = init.getAngles(angle);
 
 export default {
   name: "Map",
@@ -127,7 +43,6 @@ export default {
     return {
       containerWidth: window.screen.width,
       locationDescribe: `1号设备海上定位：</br>标准位置${init.x0}°N,${init.y0}°E,</br>实际位置${init.x}°N,${init.y}°E`,
-      // 定义图表，各种参数
       option1: {
         radiusAxis: {
           max: 50
@@ -172,8 +87,7 @@ export default {
           min: 0,
           max: 1,
           inRange: {
-            color: ['#abd9e9', '#ffffbf',
-              '#fee090', '#fdae61', '#f46d43', '#d73027',]
+            color: ['#abd9e9', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027',]
           }
         },
         series: [{
@@ -182,7 +96,7 @@ export default {
           itemStyle: {
             opacity: 0.6
           },
-          data: heatMapData(),
+          data: heatMap.getHeatMapData(init).final_data,
           emphasis: {
             itemStyle: {
               borderColor: '#000',
@@ -193,21 +107,20 @@ export default {
           animation: false //动画
         }]
       },
-      option3:{
+      option3: {
         title: {
           text: '设备随时间位置变化图'
         },
         tooltip: {
           trigger: 'axis',
-          formatter: function (params) {
-            var htmlStr = '';
-            for(var i=0;i<params.length;i++){
-              var param = params[i];
-              if(i==1){
+          formatter: (params) => {
+            let htmlStr = '';
+            for (let i = 0; i < params.length; i++) {
+              let param = params[i];
+              if (i === 1) {
                 htmlStr += '设备移动至此处时间为' + param.value[1];
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              }
-              else if(i==2)
+              } else if (i === 2)
                 htmlStr += '设备移动至此处坐标为(' + param.value[1] + ')';
             }
             return htmlStr;
@@ -226,29 +139,29 @@ export default {
           axisLine: {onZero: true}
         },
         dataZoom: [{
-            type: 'inside',
-            xAxisIndex: 0,
-            filterMode: 'empty'
-          }, {
-            type: 'inside',
-            yAxisIndex: 0,
-            filterMode: 'empty'
-          }],
+          type: 'inside',
+          xAxisIndex: 0,
+          filterMode: 'empty'
+        }, {
+          type: 'inside',
+          yAxisIndex: 0,
+          filterMode: 'empty'
+        }],
         series: [{
-            name: 'xy_data',
-            type: 'line',
-            smooth: true,
-            symbolSize: 6,
-            data: xy_data
-          },{
-            name: 'time',
-            type: 'line',
-            data: time
-          },{
-            name: 'location',
-            type: 'line',
-            data: loc
-          }]
+          name: 'xy_data',
+          type: 'line',
+          smooth: true,
+          symbolSize: 6,
+          data: heatMap.getHeatMapData(init).xy_data
+        }, {
+          name: 'time',
+          type: 'line',
+          data: heatMap.getHeatMapData(init).time
+        }, {
+          name: 'location',
+          type: 'line',
+          data: heatMap.getHeatMapData(init).loc
+        }]
       }
     }
   }
