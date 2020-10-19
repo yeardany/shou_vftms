@@ -1,9 +1,9 @@
 <template>
-  <van-grid :gutter="10" :column-num="3" clickable>
+  <van-grid :gutter="10" :column-num="3" :clickable="true">
     <van-grid-item icon="tv-o" v-for="item in list"
                    :key="item.id"
                    :text="item.name"
-                   @click="cameraDetail">
+                   to="/cameraDetail">
     </van-grid-item>
   </van-grid>
 </template>
@@ -25,11 +25,7 @@ export default {
       ]
     }
   },
-  methods: {
-    cameraDetail() {
-      this.$router.push('/cameraDetail')
-    }
-  }
+  methods: {}
 }
 </script>
 

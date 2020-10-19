@@ -14,6 +14,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="android-minSdkVersion" value="21" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
     <platform name="android">
         <icon src="res/android/icon/icon.png" />
         <icon density="mdpi" src="res/android/icon/mipmap-mdpi/ic_launcher.png" />

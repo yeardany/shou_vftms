@@ -170,6 +170,6 @@ export default {
 <style scoped>
 span {
   display: block;
-  padding: 0 3%
+  padding: 0 1.5%
 }
 </style>
