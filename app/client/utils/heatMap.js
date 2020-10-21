@@ -58,9 +58,6 @@ let heatMap = {
         xy_data.push([m_x.toFixed(2), m_y.toFixed(2)]);
         loc.push([m_x.toFixed(2), xy_loc]);
         time.push([m_x.toFixed(2), date]);
-        /*        console.log(loc)
-                console.log(xy_data)
-                console.log(time)*/
       }
       //取整
       m_x = Math.floor(m_x);
