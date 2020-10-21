@@ -36,10 +36,12 @@ export default {
           data: chartData.xData
         },
         yAxis3D: {
+          name: 'Data',
           type: 'category',
           data: chartData.yData
         },
         zAxis3D: {
+          name: 'pH',
           type: 'value'
         },
         grid3D: {
@@ -71,12 +73,6 @@ export default {
               fontSize: 16,
               borderWidth: 1
             }
-          },
-          encode:{
-            x:'Time',
-            y:'Data',
-            z:'pH',
-            tooltip: [0, 1, 2, 3, 4]
           },
           itemStyle: {
             opacity: 0.4
