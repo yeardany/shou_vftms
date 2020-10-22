@@ -6,6 +6,8 @@ import EquipmentCamera from '../views/camera/equipmentCamera.vue'
 import Environment from '../views/environment/environment.vue'
 import EnvironmentDetail from '../views/environment/environmentDetail.vue'
 import EnvironmentO2 from '../views/environment/environmentO2.vue'
+import EnvironmentNut from '../views/environment/environmentNut.vue'
+import EnvironmentTsc from '../views/environment/environmentTsc.vue'
 import EnvironmentPH from '../views/environment/environmentPH.vue'
 import EnvironmentTemperature from '../views/environment/environmentTemperature.vue'
 import Home from '../views/home/home.vue'
@@ -34,6 +36,10 @@ export default [
     redirect: '/environmentDetail/enO2',
     children: [
       {
+        path: 'enNut',
+        component: EnvironmentNut
+      },
+      {
         path: 'enO2',
         component: EnvironmentO2
       },
@@ -44,6 +50,10 @@ export default [
       {
         path: 'enTem',
         component: EnvironmentTemperature
+      },
+      {
+        path: 'enTsc',
+        component: EnvironmentTsc
       },
       {
         path: 'chartTest',
