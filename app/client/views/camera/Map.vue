@@ -9,7 +9,10 @@
       </template>
     </NavBar>
     <template>
-      <b><span v-html="locationDescribe"></span></b>
+      <b>
+        <span v-html="locationDescribe"></span>
+        <v-chart :style="{width: containerWidth*0.3 + 'px',height: containerWidth*0.3 + 'px' }" :options="option"/>
+      </b>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option3"/>
@@ -47,6 +50,56 @@ export default {
     return {
       containerWidth: window.screen.width,
       locationDescribe: '下列各图中心原点位置即为标准点坐标:<br>('+init.x0+'°N,'+init.y0+'°E)<br><br>',
+      option:{
+        xAxis: {
+          type: 'value',
+          max: 1,
+          min: -1,
+          name: "东",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 16,
+            padding: [-10,-10,-10,-10]
+          },
+          axisLine:{
+            symbol:['none','arrow'],
+            symbolSize:[8,10]
+          },
+          splitLine:{show:false},
+          axisTick:{show:false},
+          axisLabel:{show:false}
+        },
+        yAxis: {
+          type: 'value',
+          max: 1,
+          min: -1,
+          name: "北",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 16,
+            padding: [-10,-10,-10,-10]
+          },
+          axisLine:{
+            symbol:['none','arrow'],
+            symbolSize:[8,10]
+          },
+          splitLine:{show:false},
+          axisTick:{show:false},
+          axisLabel:{show:false}
+        },
+        grid:{
+          left:'15%',
+          right:'20%',
+          top:'20%',
+          bottom:'15%'
+        },
+        series: [{
+          name: 'line',
+          type: 'scatter',
+          data: [0,0],
+          itemStyle:{color: '#1C48CB'}
+        }]
+      },
       option1: {
         title: {
           text: '海上设备定位图'
@@ -86,7 +139,23 @@ export default {
           coordinateSystem: 'polar',
           name: '偏移度',
           type: 'scatter',
-          data: [[0, 0], [dist, angles]]
+          data: [[0, 0], [dist, angles]],
+          itemStyle:{
+            color: (params) =>{
+              console.log(params.length)
+              for (let i = 0; i < params.length; i++) {
+                let param = params[i];
+                if (i === 0) {
+                  console.log(param)
+                  console.log(param.length)
+                  if(param.name>30)
+                    return '#1C48CB';
+                  else
+                    return '#FF0000';
+                }
+              }
+            }
+          }
         },{
           coordinateSystem: 'polar',
           name: '经纬度',
@@ -108,6 +177,10 @@ export default {
           nameTextStyle: {
             fontSize: 12,
             padding: [10, 10, 10, 10]
+          },
+          axisLine:{
+            symbol:['arrow','arrow'],
+            symbolSize:[5,7]
           }
         },
         yAxis: {
@@ -119,6 +192,10 @@ export default {
           nameTextStyle: {
             fontSize: 12,
             padding: [10, 10, 10, 10]
+          },
+          axisLine:{
+            symbol:['arrow','arrow'],
+            symbolSize:[5,7]
           }
         },
         grid:{
@@ -174,19 +251,27 @@ export default {
           min: -50,
           max: 50,
           type: 'value',
-          axisLine: {onZero: true},
+          axisLine: {
+            onZero: true,
+            symbol:['arrow','arrow'],
+            symbolSize:[5,7]
+          },
           name: "距标准点横向距离:km",
           nameLocation: "middle",
           nameTextStyle: {
             fontSize: 12,
             padding: [10, 10, 10, 10]
-          }
+          },
         },
         yAxis: {
           min: -50,
           max: 50,
           type: 'value',
-          axisLine: {onZero: true},
+          axisLine: {
+            onZero: true,
+            symbol:['arrow','arrow'],
+            symbolSize:[5,7]
+          },
           name: "距标准点纵向距离:km",
           nameLocation: "middle",
           nameTextStyle: {
