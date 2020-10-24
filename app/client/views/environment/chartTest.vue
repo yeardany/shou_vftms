@@ -1,7 +1,7 @@
 <template>
   <van-row>
     <van-col span="24">
-      <v-chart :options="polar" :style="{width: containerWidth + 'px',height: containerWidth + 'px'}"/>
+      <v-chart :options="polar" /> <!--:style="{width: containerWidth + 'px',height: containerWidth + 'px'}"/>-->
     </van-col>
   </van-row>
 </template>

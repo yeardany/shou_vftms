@@ -5,9 +5,11 @@ import IslandCamera from '../views/camera/islandCamera.vue'
 import EquipmentCamera from '../views/camera/equipmentCamera.vue'
 import Environment from '../views/environment/environment.vue'
 import EnvironmentDetail from '../views/environment/environmentDetail.vue'
+import EnvironmentNut from '../views/environment/environmentNut.vue'
 import EnvironmentO2 from '../views/environment/environmentO2.vue'
 import EnvironmentPH from '../views/environment/environmentPH.vue'
 import EnvironmentTemperature from '../views/environment/environmentTemperature.vue'
+import EnvironmentTsc from '../views/environment/environmentTsc.vue'
 import Home from '../views/home/home.vue'
 import Inspect from '../views/inspect/inspect.vue'
 import InspectDetail from '../views/inspect/inspectDetail.vue'
@@ -34,6 +36,10 @@ export default [
     redirect: '/environmentDetail/enO2',
     children: [
       {
+        path: 'enNut',
+        component: EnvironmentNut
+      },
+      {
         path: 'enO2',
         component: EnvironmentO2
       },
@@ -44,6 +50,10 @@ export default [
       {
         path: 'enTem',
         component: EnvironmentTemperature
+      },
+      {
+        path: 'enTsc',
+        component: EnvironmentTsc
       },
       {
         path: 'chartTest',
