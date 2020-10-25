@@ -11,7 +11,7 @@
     <template>
       <b>
         <span v-html="locationDescribe"></span>
-        <v-chart :style="{width: containerWidth*0.3 + 'px',height: containerWidth*0.3 + 'px' }" :options="option"/>
+        <v-chart :style="{width: containerWidth + 'px',height: containerWidth*0.3 + 'px' }" :options="option"/>
       </b>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
@@ -37,8 +37,6 @@ let angle = init.r_rad.toFixed(2),
   angles = init.getAngles(angle),
   jw_loc = init.x + '°N,' + init.y + '°E',
   init_jw_loc = init.x0 + '°N,' + init.y0 + '°E';
-console.log(jw_loc)
-console.log(init_jw_loc)
 
 export default {
   name: "Map",
@@ -49,8 +47,8 @@ export default {
   data() {
     return {
       containerWidth: window.screen.width,
-      locationDescribe: '下列各图中心原点位置即为标准点坐标:<br>('+init.x0+'°N,'+init.y0+'°E)<br><br>',
-      option:{
+      locationDescribe: '下列各图中心原点位置即为标准点坐标:<br>(' + init.x0 + '°N,' + init.y0 + '°E)<br><br>',
+      option: {
         xAxis: {
           type: 'value',
           max: 1,
@@ -59,15 +57,15 @@ export default {
           nameLocation: "end",
           nameTextStyle: {
             fontSize: 16,
-            padding: [-10,-10,-10,-10]
+            padding: [-10, -10, -10, -10]
           },
-          axisLine:{
-            symbol:['none','arrow'],
-            symbolSize:[8,10]
+          axisLine: {
+            symbol: ['none', 'arrow'],
+            symbolSize: [8, 10]
           },
-          splitLine:{show:false},
-          axisTick:{show:false},
-          axisLabel:{show:false}
+          splitLine: {show: false},
+          axisTick: {show: false},
+          axisLabel: {show: false}
         },
         yAxis: {
           type: 'value',
@@ -77,27 +75,37 @@ export default {
           nameLocation: "end",
           nameTextStyle: {
             fontSize: 16,
-            padding: [-10,-10,-10,-10]
+            padding: [-10, -10, -10, -10]
           },
-          axisLine:{
-            symbol:['none','arrow'],
-            symbolSize:[8,10]
+          axisLine: {
+            symbol: ['none', 'arrow'],
+            symbolSize: [8, 10]
           },
-          splitLine:{show:false},
-          axisTick:{show:false},
-          axisLabel:{show:false}
+          splitLine: {show: false},
+          axisTick: {show: false},
+          axisLabel: {show: false}
         },
-        grid:{
-          left:'15%',
-          right:'20%',
-          top:'20%',
-          bottom:'15%'
+        grid: {
+          left: '35%',
+          right: '45%',
+          top: '20%',
+          bottom: '15%'
         },
+        /*tooltip: {
+          trigger: 'axis',
+          formatter: (p) => {
+            let htmlStr = '';
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            htmlStr = '经纬度坐标:<br>' + init_jw_loc;
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            return htmlStr;
+          }
+        },*/
         series: [{
           name: 'line',
           type: 'scatter',
-          data: [0,0],
-          itemStyle:{color: '#1C48CB'}
+          data: [0, 0],
+          itemStyle: {color: '#05a1f8'}
         }]
       },
       option1: {
@@ -120,12 +128,17 @@ export default {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              if (i === 0) {
-                htmlStr += '设备偏移距离:<br>' + param.value[0].toFixed(2) +'km';
+              if (i == 0) {
+                htmlStr += '设备偏移距离:<br>'
+                htmlStr += param.value[0].toFixed(2) + 'km<br>';
+                if (param.value[0] > 30) {
+                  htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
+                  htmlStr += '<div style="border: 1px solid #ff0000"></div>';
+                }
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-                htmlStr += '设备偏移角度:<br>' + param.value[1]+'°';
+                htmlStr += '设备偏移角度:<br>' + param.value[1] + '°';
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              } else
+              } else if (i == 1)
                 htmlStr += '经纬度坐标:<br>' + param.value[1];
             }
             return htmlStr;
@@ -137,30 +150,28 @@ export default {
         },
         series: [{
           coordinateSystem: 'polar',
-          name: '偏移度',
+          name: '偏移',
           type: 'scatter',
           data: [[0, 0], [dist, angles]],
-          itemStyle:{
-            color: (params) =>{
-              console.log(params.length)
-              for (let i = 0; i < params.length; i++) {
-                let param = params[i];
-                if (i === 0) {
-                  console.log(param)
-                  console.log(param.length)
-                  if(param.name>30)
-                    return '#1C48CB';
-                  else
-                    return '#FF0000';
-                }
-              }
+          itemStyle: {
+            color: (c) => {
+              if (dist > 30)
+                return '#ff0000';
+              else
+                return '#05a1f8';
             }
           }
-        },{
+        }, {
           coordinateSystem: 'polar',
-          name: '经纬度',
+          name: '偏移经纬度',
           type: 'scatter',
-          data: [[0,init_jw_loc],[dist,jw_loc]]
+          data: [[0, init_jw_loc], [dist, jw_loc]]
+        }, {
+          coordinateSystem: 'polar',
+          name: '中心',
+          type: 'scatter',
+          data: [0, 0],
+          itemStyle: {color: '#05a1f8'}
         }]
       },
       option2: {
@@ -178,10 +189,11 @@ export default {
             fontSize: 12,
             padding: [10, 10, 10, 10]
           },
-          axisLine:{
-            symbol:['arrow','arrow'],
-            symbolSize:[5,7]
-          }
+          axisLine: {
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          splitNumber: 10
         },
         yAxis: {
           type: 'value',
@@ -193,12 +205,13 @@ export default {
             fontSize: 12,
             padding: [10, 10, 10, 10]
           },
-          axisLine:{
-            symbol:['arrow','arrow'],
-            symbolSize:[5,7]
-          }
+          axisLine: {
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          splitNumber: 10
         },
-        grid:{
+        grid: {
           left: '17%'
         },
         visualMap: {
@@ -236,7 +249,7 @@ export default {
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
               if (i === 1) {
-                if(param.value[0]==0.00)
+                if (param.value[0] == 0.00)
                   htmlStr += '位于标准点处时间:<br>' + param.value[1];
                 else
                   htmlStr += '偏移至此处时间:<br>' + param.value[1];
@@ -253,8 +266,8 @@ export default {
           type: 'value',
           axisLine: {
             onZero: true,
-            symbol:['arrow','arrow'],
-            symbolSize:[5,7]
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
           },
           name: "距标准点横向距离:km",
           nameLocation: "middle",
@@ -269,17 +282,17 @@ export default {
           type: 'value',
           axisLine: {
             onZero: true,
-            symbol:['arrow','arrow'],
-            symbolSize:[5,7]
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
           },
           name: "距标准点纵向距离:km",
           nameLocation: "middle",
           nameTextStyle: {
             fontSize: 12,
             padding: [10, 10, 10, 10]
-          }
+          },
         },
-        grid:{
+        grid: {
           left: '15%'
         },
         dataZoom: [{
