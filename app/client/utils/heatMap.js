@@ -1,12 +1,21 @@
-let heatMap = {
+let
+  xy_data = [],
+  time = [],
+  date = '16:40',
+  loc = [],
+  data = [];
 
-  getHeatMapData: (init, data_loc) => {
-    let
-      xy_data = [],
-      time = [],
-      date = '16:40',
-      loc = [],
-      data = [];
+class heatMap {
+
+  constructor(init, data_loc) {
+    this.init = init
+    this.data_loc = data_loc
+  }
+
+  getHeatMapData() {
+
+    let init = this.init,
+      data_loc = this.data_loc
 
     for (let i = -50; i <= 50; i++) {
       data[i] = [];
@@ -54,7 +63,6 @@ let heatMap = {
       for (let j = -50; j < 50; j++)
         final_data.push([i, j, data[i][j] / max]);
     }
-
     /*    for (let i = 0; i < 10000; i++){
             if (final_data[i][2] != 0)
               console.log('非零坐标'+'('+final_data[i][0]+','+final_data[i][1]+') 的值是'+final_data[i][2])
@@ -69,3 +77,5 @@ let heatMap = {
 }
 
 module.exports = heatMap
+
+
