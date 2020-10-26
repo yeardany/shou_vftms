@@ -9,10 +9,10 @@
       </template>
     </NavBar>
     <template>
-      <b>
-        <span v-html="locationDescribe"></span>
-        <v-chart :style="{width: containerWidth + 'px',height: containerWidth*0.3 + 'px' }" :options="option"/>
-      </b>
+      <div>
+        <b><span v-html="locationDescribe"></span></b>
+        <v-chart :style="{width: containerWidth + 'px',height: containerWidth * 0.3 + 'px' }" :options="option"/>
+      </div>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option1"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option2"/>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }" :options="option3"/>
@@ -28,7 +28,36 @@ import 'echarts/lib/chart/heatmap'
 import LocationCompute from '../../utils/locationCompute'
 import heatMap from '../../utils/heatMap'
 
+/**
+ * (x0, y0) 代表浮标固定（初始）位置
+ * (x, y) 代表浮标漂移（当前）位置
+ * data_loc 代表浮标历史漂移位置记录，用于热力图
+ * @type {LocationCompute}
+ */
 let init = new LocationCompute(30.66, 122.20, 30.40, 121.98, 6371.14),
+  data_loc =
+    [
+      [30.4023, 121.98073], [30.40465, 121.98275], [30.40766, 121.98337], [30.40896, 121.98575], [30.40996, 121.98915],
+      [30.41112, 121.99232], [30.41303, 121.99315], [30.41486, 121.99535], [30.41586, 121.99625], [30.41778, 121.99751],
+      [30.41896, 122.00125], [30.42545, 122.00473], [30.42593, 122.00623], [30.42923, 122.00823], [30.43123, 122.00923],
+      [30.43253, 122.01125], [30.43523, 122.01473], [30.43923, 122.01523], [30.44423, 122.01873], [30.45793, 122.01993],
+      [30.46323, 122.02073], [30.46423, 122.02434], [30.46923, 122.02434], [30.47023, 122.02534], [30.47193, 122.02834],
+      [30.47723, 122.03134], [30.48523, 122.03434], [30.48923, 122.03734], [30.49323, 122.03734], [30.49913, 122.03734],
+      [30.50223, 122.04434], [30.51123, 122.04434], [30.51443, 122.04634], [30.51913, 122.04634], [30.52293, 122.04634],
+      [30.52423, 122.05434], [30.52753, 122.05434], [30.53193, 122.05734], [30.53933, 122.05734], [30.54493, 122.05734],
+      [30.55123, 122.06439], [30.55423, 122.06439], [30.55931, 122.06439], [30.56231, 122.06839], [30.56311, 122.06839],
+      [30.56423, 122.07434], [30.56753, 122.07434], [30.56893, 122.07534], [30.56933, 122.07534], [30.56993, 122.07934],
+      [30.57123, 122.08434], [30.57353, 122.08434], [30.57593, 122.08534], [30.57833, 122.08834], [30.57993, 122.08934],
+      [30.58123, 122.09434], [30.58353, 122.09434], [30.58593, 122.09434], [30.58833, 122.09734], [30.58993, 122.09934],
+      [30.59123, 122.10434], [30.59353, 122.10434], [30.59593, 122.10634], [30.59833, 122.10634], [30.59993, 122.10634],
+      [30.60123, 122.11434], [30.60353, 122.11434], [30.60593, 122.11434], [30.60833, 122.11734], [30.60993, 122.11934],
+      [30.61123, 122.12434], [30.61353, 122.12634], [30.61593, 122.12734], [30.61833, 122.12874], [30.61993, 122.12834],
+      [30.62123, 122.13434], [30.62353, 122.13434], [30.62593, 122.13434], [30.62833, 122.13834], [30.62993, 122.13934],
+      [30.63123, 122.14334], [30.63353, 122.14334], [30.63593, 122.14734], [30.63833, 122.14834], [30.63993, 122.15334],
+      [30.64123, 122.16134], [30.64353, 122.16134], [30.64593, 122.16934], [30.64833, 122.17134], [30.64993, 122.17834],
+      [30.65223, 122.18434], [30.65453, 122.18434], [30.65893, 122.18634], [30.65933, 122.19134], [30.65993, 122.19934],
+      [30.66412, 122.20446], [30.66492, 122.20543], [30.66512, 122.20546], [30.66712, 122.20546], [30.66812, 122.20546]
+    ],
   // 已知斜边dist，再求对边s_dist，用 ArcSin 函数求角度
   dist = init.getDistance(init.x0, init.y0, init.x, init.y),
   s_dist = init.getDistance(init.x0, init.y, init.x, init.y);
@@ -128,7 +157,7 @@ export default {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              if (i == 0) {
+              if (i === 0) {
                 htmlStr += '设备偏移距离:<br>'
                 htmlStr += param.value[0].toFixed(2) + 'km<br>';
                 if (param.value[0] > 30) {
@@ -138,7 +167,7 @@ export default {
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += '设备偏移角度:<br>' + param.value[1] + '°';
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              } else if (i == 1)
+              } else if (i === 1)
                 htmlStr += '经纬度坐标:<br>' + param.value[1];
             }
             return htmlStr;
@@ -227,7 +256,7 @@ export default {
           itemStyle: {
             opacity: 0.6
           },
-          data: heatMap.getHeatMapData(init).final_data,
+          data: heatMap.getHeatMapData(init, data_loc).final_data,
           emphasis: {
             itemStyle: {
               borderColor: '#000',
@@ -249,7 +278,7 @@ export default {
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
               if (i === 1) {
-                if (param.value[0] == 0.00)
+                if (param.value[0] === 0.00)
                   htmlStr += '位于标准点处时间:<br>' + param.value[1];
                 else
                   htmlStr += '偏移至此处时间:<br>' + param.value[1];
@@ -309,16 +338,15 @@ export default {
           type: 'line',
           smooth: true,
           symbolSize: 6,
-
-          data: heatMap.getHeatMapData(init).xy_data
+          data: heatMap.getHeatMapData(init, data_loc).xy_data
         }, {
           name: 'time',
           type: 'line',
-          data: heatMap.getHeatMapData(init).time
+          data: heatMap.getHeatMapData(init, data_loc).time
         }, {
           name: 'location',
           type: 'line',
-          data: heatMap.getHeatMapData(init).loc
+          data: heatMap.getHeatMapData(init, data_loc).loc
         }]
       }
     }
