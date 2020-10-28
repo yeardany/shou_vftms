@@ -31,8 +31,6 @@
 import ECharts from 'vue-echarts'
 import 'echarts-gl';
 import 'echarts/lib/chart/line'
-import Vue from 'vue';
-import laydate from 'laydate/laydate/laydate'
 
 
 let chartData = {
@@ -118,16 +116,6 @@ export default {
         }]
       }
     }
-  },
-  mounted: function () {
-    console.log(laydate)
-    laydate.render({
-      elem: '#test',
-      type:'datetime',
-      done: (value) => {
-        this.date = value
-      }
-    })
   },
   components: {
     'v-chart': ECharts
