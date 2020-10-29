@@ -169,8 +169,8 @@ export default {
               let param = params[i];
               if (i === 0) {
                 htmlStr += '设备偏移距离:<br>'
-                htmlStr += param.value[0].toFixed(2) + 'km<br>';
-                if (param.value[0] > 30) {
+                htmlStr += parseFloat(param.value[0]).toFixed(2) + 'km<br>';
+                if (parseInt(param.value[0]) > 30) {
                   htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
                   htmlStr += '<div style="border: 1px solid #ff0000"></div>';
                 }
@@ -292,7 +292,7 @@ export default {
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
               if (i === 1) {
-                if (param.value[0] === 0.00)
+                if (param.value[0] === "0.00" || param.value[0] === 0.00)
                   htmlStr += `位于标准点处时间:<br>${param.value[1]}`;
                 else
                   htmlStr += `偏移至此处时间:<br>${param.value[1]}`;
