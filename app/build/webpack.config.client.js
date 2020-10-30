@@ -40,7 +40,16 @@ const devServer = {
   overlay: {
     errors: true
   },
-  hot: true
+  hot: true,
+  proxy: {
+    '/api': {
+      target: 'http://111.229.176.208:3306/api',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': ''
+      }
+    }
+  }
 }
 
 let config
