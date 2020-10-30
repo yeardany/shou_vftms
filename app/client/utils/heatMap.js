@@ -1,15 +1,64 @@
+let
+  _final_data = [],
+  _xy_data = [],
+  _time = [],
+  _date = '16:40',
+  _loc = [],
+  _data = [];
+
 class heatMap {
 
   constructor(init, data_loc) {
     this.init = init
     this.data_loc = data_loc
+  }
 
-    this.final_data = []
-    this.xy_data = []
-    this.time = []
-    this.date = '16:40'
-    this.loc = []
-    this.data = []
+  get final_data() {
+    return _final_data
+  }
+
+  set final_data(v) {
+    _final_data = v
+  }
+
+  get xy_data() {
+    return _xy_data
+  }
+
+  set xy_data(v) {
+    _xy_data = v
+  }
+
+  get time() {
+    return _time
+  }
+
+  set time(v) {
+    _time = v
+  }
+
+  get data() {
+    return _data
+  }
+
+  set data(v) {
+    _data = v
+  }
+
+  get date() {
+    return _date
+  }
+
+  set date(v) {
+    _date = v
+  }
+
+  get loc() {
+    return _loc
+  }
+
+  set loc(v) {
+    _loc = v
   }
 
   getHeatMapData() {
@@ -66,12 +115,14 @@ class heatMap {
             if (final_data[i][2] != 0)
               console.log('非零坐标'+'('+final_data[i][0]+','+final_data[i][1]+') 的值是'+final_data[i][2])
     }*/
-    return {
-      "final_data": this.final_data,
-      "xy_data": this.xy_data,
-      "time": this.time,
-      "loc": this.loc
-    };
+  }
+
+  reset() {
+    this.final_data = []
+    this.xy_data = []
+    this.time = []
+    this.loc = []
+    this.data = []
   }
 }
 

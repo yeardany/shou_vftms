@@ -60,7 +60,9 @@ export default {
       return new LocationCompute(this.x0, this.y0, this.x, this.y, this.R)
     },
     heat() {
-      return new heatMap(this.init, this.data_loc).getHeatMapData()
+      let h = new heatMap(this.init, this.data_loc)
+      h.getHeatMapData()
+      return h
     },
     dist() {
       return this.init.getDistance(this.x0, this.y0, this.x, this.y)
@@ -292,6 +294,7 @@ export default {
               } else if (param.componentIndex === 2)
                 htmlStr += `此处经纬度:<br>${param.value[1]}`;
             }
+            this.resetHeat()
             return htmlStr;
           }
         },
@@ -355,6 +358,11 @@ export default {
           data: this.loc
         }]
       }
+    }
+  },
+  methods: {
+    resetHeat() {
+      this.heat.reset()
     }
   },
   mounted() {
