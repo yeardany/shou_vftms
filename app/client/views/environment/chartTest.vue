@@ -1,19 +1,13 @@
 <template>
 
-  <div>
+  <div id="app">
 
-    <select id="pid" class="drop-box">
-
-      <option grade="1">溶解氧</option>
-      <option grade="2">pH值</option>
-      <option grade="3">水温</option>
-      <option grade="4">营养盐</option>
-      <option grade="5">透明度</option>
-
+    <select id="pid" class="drop-box" >
+<!--      <option >{{item}}</option>-->
     </select>
 
 
-    <input type="text" id="test1" v-model="date">
+    <input type="date"  class="drop-text" value=""/>
 
 
     <van-row>
@@ -26,14 +20,22 @@
   </div>
 </template>
 
-
 <script>
+// const app = new Vue({
+//   el: '#app',
+//   data: {
+//     attrib: ['溶解氧', 'pH值', '水温', '营养盐', '透明度']
+//   }
+//
+// })
+
+
 import ECharts from 'vue-echarts'
 import 'echarts-gl';
 import 'echarts/lib/chart/line'
-import Vue from 'vue';
-import laydate from 'laydate/laydate/laydate'
 
+
+let Att = 'pH'
 
 let chartData = {
   xData: ['00：00', '01：00', '02：00', '03：00', '04：00', '05：00', '06：00', '07：00', '08：00', '09：00', '10：00', '11：00',
@@ -47,7 +49,6 @@ export default {
   name: "chartTest",
   data() {
     return {
-      date: '2017-09-08 ',
       containerWidth: window.screen.width,
       polar: {
         visualMap: {
@@ -67,7 +68,7 @@ export default {
           data: chartData.yData
         },
         zAxis3D: {
-          name: 'pH',
+          name: Att,
           max: 14,
           type: 'value'
         },
@@ -119,21 +120,26 @@ export default {
       }
     }
   },
-  mounted: function () {
-    console.log(laydate)
-    laydate.render({
-      elem: '#test',
-      type:'datetime',
-      done: (value) => {
-        this.date = value
-      }
-    })
+  watch: {
+    bookDetail() {
+      setTimeout(() => {
+        this.display()
+      }, 20);
+    }
+  },
+  methods: {
+    display() {
+      let selAtt = document.getElementById("pid");
+      Att = selAtt.options[selAtt.selectedIndex].text;
+      alert(Att);
+    }
   },
   components: {
     'v-chart': ECharts
   }
 }
 </script>
+
 
 <style scoped>
 .echarts {
@@ -149,6 +155,17 @@ ul {
   box-sizing: border-box;
   width: 80px;
   margin-left: 15px;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.175);
+  overflow: hidden;
+  margin-bottom: 0px;
+}
+.drop-text{
+  box-sizing: border-box;
+  width: 200px;
+  margin-left: 50px;
   font-size: 15px;
   text-align: center;
   border-radius: 10px;
