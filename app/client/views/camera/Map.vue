@@ -281,7 +281,6 @@ export default {
           trigger: 'axis',
           formatter: (params) => {
             let htmlStr = '';
-            console.log(params)
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
               if (param.componentIndex === 1) {
