@@ -120,20 +120,20 @@ export default {
       }
     }
   },
-  watch: {
-    bookDetail() {
-      setTimeout(() => {
-        this.display()
-      }, 20);
-    }
-  },
-  methods: {
-    display() {
-      let selAtt = document.getElementById("pid");
-      Att = selAtt.options[selAtt.selectedIndex].text;
-      alert(Att);
-    }
-  },
+  // watch: {
+  //   bookDetail() {
+  //     setTimeout(() => {
+  //       this.display()
+  //     }, 20);
+  //   }
+  // },
+  // methods: {
+  //   display() {
+  //     let selAtt = document.getElementById("pid");
+  //     Att = selAtt.options[selAtt.selectedIndex].text;
+  //     alert(Att);
+  //   }
+  // },
   components: {
     'v-chart': ECharts
   }
