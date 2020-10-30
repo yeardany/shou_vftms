@@ -13,12 +13,12 @@
     </select>
 
 
-    <input type="text" id="test1" v-model="date">
-
+    <input type="date" v-model="date">
+    <van-button type="primary" @click="test">awei</van-button>
 
     <van-row>
       <van-col span="24">
-        <v-chart :options="polar"></v-chart>
+        <v-chart :options="option"></v-chart>
       </van-col>
     </van-row>
 
@@ -46,8 +46,13 @@ export default {
   data() {
     return {
       date: '2017-09-08 ',
-      containerWidth: window.screen.width,
-      polar: {
+      testText: 'PH',
+      containerWidth: window.screen.width
+    }
+  },
+  computed: {
+    option() {
+      return {
         visualMap: {
           max: 14,
           inRange: {
@@ -65,7 +70,7 @@ export default {
           data: chartData.yData
         },
         zAxis3D: {
-          name: 'pH',
+          name: this.testText,
           max: 14,
           type: 'value'
         },
@@ -115,6 +120,11 @@ export default {
           }
         }]
       }
+    }
+  },
+  methods: {
+    test() {
+      this.testText = '溶解氧'
     }
   },
   components: {
