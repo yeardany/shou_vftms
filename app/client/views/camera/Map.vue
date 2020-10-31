@@ -374,51 +374,54 @@ export default {
 
     this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
-    axios.get(api.api.getEquipments).then((res) => {
-      let data = res.data,
-        eq1 = data[0];
+    // 防止通知与地图同时渲染卡顿，延迟半秒请求
+    setTimeout(() => {
+      axios.get(api.api.getEquipments).then((res) => {
+        let data = res.data,
+          eq1 = data[0];
 
-      if (data === [] || data === undefined || eq1 === undefined)
-        throw {'message': '数据库连接失败'}
+        if (data === [] || data === undefined || eq1 === undefined)
+          throw {'message': '数据库连接失败'}
 
-      let
-        x0 = eq1['oLocation'][0],
-        y0 = eq1['oLocation'][1],
-        x = eq1['pLocation'][0],
-        y = eq1['pLocation'][1],
-        data_loc = eq1['lHistory']
+        let
+          x0 = eq1['oLocation'][0],
+          y0 = eq1['oLocation'][1],
+          x = eq1['pLocation'][0],
+          y = eq1['pLocation'][1],
+          data_loc = eq1['lHistory']
 
-      // 请求获得数据赋值
+        // 请求获得数据赋值
+        this.x0 = x0;
+        this.y0 = y0;
+        this.x = x;
+        this.y = y;
+        this.data_loc = data_loc;
+        this.locationDescribe = `下列各图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
 
-      this.x0 = x0;
-      this.y0 = y0;
-      this.x = x;
-      this.y = y;
-      this.data_loc = data_loc;
-      this.locationDescribe = `下列各图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
+        // 手动渲染图表
+        const op = this.$refs.op
+        const op1 = this.$refs.op1
+        const op2 = this.$refs.op2
+        const op3 = this.$refs.op3
 
-      // 手动渲染图表
-      const op = this.$refs.op
-      const op1 = this.$refs.op1
-      const op2 = this.$refs.op2
-      const op3 = this.$refs.op3
+        op.mergeOptions(this.option, true)
+        op1.mergeOptions(this.option1, true)
+        op2.mergeOptions(this.option2, true)
+        op3.mergeOptions(this.option3, true)
 
-      op.mergeOptions(this.option, true)
-      op1.mergeOptions(this.option1, true)
-      op2.mergeOptions(this.option2, true)
-      op3.mergeOptions(this.option3, true)
+        // 清空热力图计算数据
+        this.resetHeat()
 
-      // 清空热力图计算数据
-      this.resetHeat()
+        setTimeout(() => {
+          this.$notify.clear()
+        }, 500);
 
-      setTimeout(() => {
+      }).catch((e) => {
         this.$notify.clear()
-      }, 1000);
+        this.$notify({type: 'warning', message: e.message, duration: 1500});
+      })
+    }, 500);
 
-    }).catch((e) => {
-      this.$notify.clear()
-      this.$notify({type: 'warning', message: e.message, duration: 1500});
-    })
   }
 }
 </script>
