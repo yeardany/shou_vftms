@@ -36,6 +36,7 @@ import 'echarts/lib/chart/heatmap'
 import LocationCompute from '../../utils/locationCompute'
 import heatMap from '../../utils/heatMap'
 import axios from 'axios'
+import {Notify} from "vant";
 
 export default {
   name: "Map",
@@ -51,6 +52,7 @@ export default {
       y: 0,
       R: 6371.14,
       data_loc: [],
+      locationDescribe: '',
       baseUrl: '/api',
       containerWidth: window.screen.width
     }
@@ -72,9 +74,6 @@ export default {
       this.init.r_rad = Math.asin(s_dist / this.dist)
       let angle = this.init.r_rad.toFixed(2)
       return this.init.getAngles(angle)
-    },
-    locationDescribe() {
-      return `下列各图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`
     },
     final_data() {
       return this.heat.final_data
@@ -373,9 +372,16 @@ export default {
      * @type {LocationCompute}
      */
 
+    this.$notify({type: 'primary', message: '加载中...', duration: 0});
+
     axios.get(`${this.baseUrl}/getEquipments`).then((res) => {
       let data = res.data,
-        eq1 = data[0],
+        eq1 = data[0];
+
+      if (data === [] || data === undefined || eq1 === undefined)
+        throw {'message': '数据库连接失败'}
+
+      let
         x0 = eq1['oLocation'][0],
         y0 = eq1['oLocation'][1],
         x = eq1['pLocation'][0],
@@ -383,11 +389,13 @@ export default {
         data_loc = eq1['lHistory']
 
       // 请求获得数据赋值
+
       this.x0 = x0;
       this.y0 = y0;
       this.x = x;
       this.y = y;
       this.data_loc = data_loc;
+      this.locationDescribe = `下列各图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
 
       // 手动渲染图表
       const op = this.$refs.op
@@ -400,8 +408,16 @@ export default {
       op2.mergeOptions(this.option2, true)
       op3.mergeOptions(this.option3, true)
 
+      // 清空热力图计算数据
       this.resetHeat()
 
+      setTimeout(() => {
+        this.$notify.clear()
+      }, 1000);
+
+    }).catch((e) => {
+      this.$notify.clear()
+      this.$notify({type: 'warning', message: e.message, duration: 1500});
     })
   }
 }
