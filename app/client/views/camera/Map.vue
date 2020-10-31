@@ -36,6 +36,7 @@ import 'echarts/lib/chart/heatmap'
 import LocationCompute from '../../utils/locationCompute'
 import heatMap from '../../utils/heatMap'
 import axios from 'axios'
+import api from '../../../config/api'
 import {Notify} from "vant";
 
 export default {
@@ -53,7 +54,6 @@ export default {
       R: 6371.14,
       data_loc: [],
       locationDescribe: '',
-      baseUrl: '/api',
       containerWidth: window.screen.width
     }
   },
@@ -374,7 +374,7 @@ export default {
 
     this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
-    axios.get(`${this.baseUrl}/getEquipments`).then((res) => {
+    axios.get(api.api.getEquipments).then((res) => {
       let data = res.data,
         eq1 = data[0];
 

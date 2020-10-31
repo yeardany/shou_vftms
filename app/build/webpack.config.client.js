@@ -6,6 +6,8 @@ const ExtractPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./webpack.config.base')
 
+const api = require('../config/api')
+
 const isDev = process.env.NODE_ENV === 'development'
 
 const defaultPluins = [
@@ -43,7 +45,7 @@ const devServer = {
   hot: true,
   proxy: {
     '/api': {
-      target: 'http://111.229.176.208:3306/api',
+      target: api.apiAddress,
       changeOrigin: true,
       pathRewrite: {
         '^/api': ''
