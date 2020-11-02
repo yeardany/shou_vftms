@@ -26,6 +26,7 @@ let app = {
     Dialog.confirm({
       title: title,
       message: msg,
+      messageAlign: 'left'
     }).then(yes).catch(no);
   },
 
@@ -113,7 +114,7 @@ let app = {
       if (!remotePackage.failedInstall) {
         app.confirm(
           '更新提示',
-          `有可用更新！更新内容：${remotePackage.description}，是否更新？`,
+          `有可用更新！本次更新内容：\n${remotePackage.description}\n是否更新？`,
           () => {
             remotePackage.download(app.updateOnPackageDownloaded, app.updateOnError, null)
           },
