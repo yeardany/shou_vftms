@@ -21,7 +21,7 @@
         type="体长"
         name="体长"
         label="体长"
-        placeholder="体长"
+        placeholder="体长，单位（cm）"
         :rules="[{ required: true, message: '请填写体长' }]"
       />
       <van-field
@@ -29,7 +29,7 @@
         type="体重"
         name="体重"
         label="体重"
-        placeholder="体重"
+        placeholder="体重，单位（kg）"
         :rules="[{ required: true, message: '请填写体重' }]"
       />
       <van-field
@@ -59,6 +59,8 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
+import axios from "axios";
+import api from "../../../config/api";
 
 export default {
   name: "newInspect",
@@ -73,7 +75,19 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      console.log('submit', values);
+
+      let params = new URLSearchParams();
+      params.append('iName', this.inspectName);
+      params.append('iWho', '巡检员01');
+      params.append('iLength', this.length);
+      params.append('iWeight', this.weight);
+      params.append('other', this.ps);
+      params.append('time', new Date().getTime());
+
+      axios.post(api.api.addInspects, params).then((res) => {
+        console.log('----------->', res)
+      })
+
     },
   },
   components: {

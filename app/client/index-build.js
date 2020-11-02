@@ -51,6 +51,7 @@ let app = {
         window.JPush.setDebugMode(true);
         window.JPush.getRegistrationID((data) => {
           try {
+            Vue.prototype.$pushID = data
             this.notify('primary', 2000, `推送ID为：${data}`)
             if (data.length === 0)
               window.setTimeout(getRegistrationID, 1000)

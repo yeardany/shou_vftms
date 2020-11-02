@@ -37,7 +37,6 @@ import LocationCompute from '../../utils/locationCompute'
 import heatMap from '../../utils/heatMap'
 import axios from 'axios'
 import api from '../../../config/api'
-import {Notify} from "vant";
 
 export default {
   name: "Map",
@@ -376,7 +375,7 @@ export default {
 
     // 防止通知与地图同时渲染卡顿，延迟半秒请求
     setTimeout(() => {
-      axios.get(api.api.getEquipments).then((res) => {
+      axios.post(api.api.getEquipments, {'pushID': this.$pushID}).then((res) => {
         let data = res.data,
           eq1 = data[0];
 
