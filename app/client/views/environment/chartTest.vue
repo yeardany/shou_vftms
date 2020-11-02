@@ -3,13 +3,12 @@
   <div>
 
     <select v-model="attrib" class="drop-box">
-
-      <!--      <option value="1" v-for="a in Att">{{a}}</option>-->
-      <option value="0">溶解氧</option>
-      <option value="1">pH值</option>
-      <option value="2">水温</option>
-      <option value="3">营养盐</option>
-      <option value="4">透明度</option>
+      <option v-for="a in attri">{{ a }}</option>
+      <!--      <option value="0">溶解氧</option>-->
+      <!--      <option value="1">pH值</option>-->
+      <!--      <option value="2">水温</option>-->
+      <!--      <option value="3">营养盐</option>-->
+      <!--      <option value="4">透明度</option>-->
 
     </select>
 
@@ -20,7 +19,7 @@
     <van-row>
       <van-col span="24">
         <v-chart :options="option3D"/>
-          <v-chart :options="option2D"/>
+        <v-chart :options="option2D"/>
       </van-col>
     </van-row>
 
@@ -45,8 +44,9 @@ export default {
   name: "chartTest",
   data() {
     return {
+      attri: ['溶解氧', 'pH值', '水温', '营养盐', '透明度'],
       attrib: '',
-      date: '',
+      date: Date.now(),
       xData: ['00：00', '01：00', '02：00', '03：00', '04：00', '05：00', '06：00', '07：00', '08：00', '09：00', '10：00', '11：00',
         '12：00', '13：00', '14：00', '15：00', '16：00', '17：00', '18：00', '19：00', '20：00', '21：00', '22：00', '23：00'],
       yData: ['', '', '', '', '', '', ''],
@@ -134,7 +134,7 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: [this.zText, this.zText+'上警戒线', this.zText+'下警戒线']
+          data: [this.zText, this.zText + '上警戒线', this.zText + '下警戒线']
         },
         xAxis: {
           type: 'category',
@@ -143,6 +143,7 @@ export default {
             '12：00', '13：00', '14：00', '15：00', '16：00', '17：00', '18：00', '19：00', '20：00', '21：00', '22：00', '23：00']
         },
         yAxis: {
+          name: this.zText,
           type: 'value'
         },
         series: [
@@ -168,18 +169,17 @@ export default {
   methods: {
     selAtt() {
       //修改3D z轴 y轴属性
-      let sAtt = this.attrib
-      let Att = ['溶解氧', 'pH值', '水温', '营养盐', '透明度']
-      this.zText = Att[sAtt]
-      let sDate = this.date
+      this.zText = this.attri[0]
       let dateTime
+      let sAtt = this.attrib
+      this.zText = sAtt
+      let sDate = this.date
       for (let i = 0; i < 7; i++) {
         dateTime = new Date(sDate)
         dateTime = dateTime.setDate(dateTime.getDate() - 6 + i);
         dateTime = new Date(dateTime);
         this.yData[i] = dateTime.toLocaleDateString()
       }
-
 
 
     }
