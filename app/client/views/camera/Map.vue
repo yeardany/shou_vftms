@@ -211,7 +211,20 @@ export default {
         title: {
           text: '设备偏移情况热力图'
         },
-        tooltip: {},
+        tooltip: {
+          trigger: 'item',
+          formatter: (params) => {
+            let htmlStr = '';
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            if ((params.value[0] === "0.00" || params.value[0] === 0.00)
+              &&(params.value[1] === "0.00" || params.value[1] === 0.00))
+              htmlStr += `设备位于标准点,<br>热力值为${params.value[2]}`;
+            else
+              htmlStr += `设备在偏移z至此处,<br>热力值为${params.value[2]}`;
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            return htmlStr;
+          }
+        },
         xAxis: {
           type: 'value',
           max: 50,
@@ -254,12 +267,23 @@ export default {
             color: ['#abd9e9', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027',]
           }
         },
+        dataZoom: [{
+          type: 'inside',
+          xAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan:30,
+          maxSpan:100
+        }, {
+          type: 'inside',
+          yAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan:30,
+          maxSpan:100
+        }],
         series: [{
           name: '该位置偏移频率',
           type: 'heatmap',
-          itemStyle: {
-            opacity: 0.6
-          },
+          itemStyle: {opacity: 0.6},
           data: this.final_data,
           emphasis: {
             itemStyle: {
@@ -333,11 +357,15 @@ export default {
         dataZoom: [{
           type: 'inside',
           xAxisIndex: 0,
-          filterMode: 'empty'
+          filterMode: 'empty',
+          minSpan:30,
+          maxSpan:100
         }, {
           type: 'inside',
           yAxisIndex: 0,
-          filterMode: 'empty'
+          filterMode: 'empty',
+          minSpan:30,
+          maxSpan:100
         }],
         series: [{
           name: 'xy_data',
