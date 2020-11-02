@@ -72,7 +72,7 @@ export default [
         redirect: '/home/camera/fishery',
         children: [
           {
-            path:'equipment',
+            path: 'equipment',
             component: EquipmentCamera
           },
           {
@@ -91,7 +91,8 @@ export default [
       },
       {
         path: 'inspect',
-        component: Inspect
+        name: 'inspect',
+        component: Inspect,
       },
       {
         path: 'weather',
@@ -101,7 +102,8 @@ export default [
   },
   {
     path: '/inspectDetail',
-    component: InspectDetail
+    name: 'inspectDetail',
+    component: InspectDetail,
   },
   {
     path: '/map',

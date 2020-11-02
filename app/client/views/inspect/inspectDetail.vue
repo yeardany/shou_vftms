@@ -20,10 +20,10 @@ export default {
   data() {
     return {
       list: [
-        {title: '巡检名称', detail: '0103巡检'},
-        {title: '体长', detail: '12cm'},
-        {title: '体重', detail: '108g'},
-        {title: '备注', detail: '生长好'}
+        {title: '巡检名称', detail: this.$route.params.name},
+        {title: '体长', detail: `${this.$route.params.length} cm`},
+        {title: '体重', detail: `${this.$route.params.weight} kg`},
+        {title: '备注', detail: this.$route.params.other}
       ]
     }
   },

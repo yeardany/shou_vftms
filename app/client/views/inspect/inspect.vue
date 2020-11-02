@@ -13,7 +13,7 @@
                 :key="index" :title="item.iName"
                 :value="item.iWho"
                 :label="item.time|timeConvert"
-                @click="inspectDetail"
+                @click="inspectDetail(item.iName,item.iWho,item.iLength,item.iWeight,item.other)"
       />
     </van-cell-group>
   </div>
@@ -33,8 +33,17 @@ export default {
     }
   },
   methods: {
-    inspectDetail() {
-      this.$router.push('/inspectDetail')
+    inspectDetail(iName, iWho, iLength, iWeight, other) {
+      this.$router.push({
+        name: 'inspectDetail',
+        params: {
+          name: iName,
+          who: iWho,
+          length: iLength,
+          weight: iWeight,
+          other: other
+        }
+      })
     }
   },
   components: {
