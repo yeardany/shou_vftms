@@ -85,7 +85,11 @@ export default {
       params.append('time', new Date().getTime());
 
       axios.post(api.api.addInspects, params).then((res) => {
-        console.log('----------->', res)
+        if (res.data['_id'] !== undefined)
+          this.$notify({
+            type: 'primary',
+            message: '创建成功！'
+          })
       })
 
     },
