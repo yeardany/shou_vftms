@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vant from 'vant'
+import VueSocketIO from 'vue-socket.io'
 import App from './app.vue'
 import createRouter from './router/router'
 import 'vant/lib/index.css'
 
 Vue.use(VueRouter)
 Vue.use(Vant);
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: 'http://127.0.0.1:3306',
+}))
 
 const router = createRouter()
 
