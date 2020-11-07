@@ -388,7 +388,7 @@ export default {
   },
   sockets: {
     connect() {
-      console.log('socket connected from Page')
+      console.log('Map.vue --->', 'has connected to server')
     },
     message(data) {
 

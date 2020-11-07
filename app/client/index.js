@@ -10,7 +10,7 @@ import 'vant/lib/index.css'
 Vue.use(VueRouter)
 Vue.use(Vant);
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: false,
   connection: api.socketAddress
 }))
 
