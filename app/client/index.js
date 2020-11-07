@@ -4,13 +4,14 @@ import Vant from 'vant'
 import VueSocketIO from 'vue-socket.io'
 import App from './app.vue'
 import createRouter from './router/router'
+import api from '../config/api'
 import 'vant/lib/index.css'
 
 Vue.use(VueRouter)
 Vue.use(Vant);
 Vue.use(new VueSocketIO({
-  debug: true,
-  connection: 'http://127.0.0.1:3306',
+  debug: false,
+  connection: api.socketAddress
 }))
 
 const router = createRouter()
