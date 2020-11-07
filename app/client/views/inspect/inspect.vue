@@ -54,14 +54,6 @@ export default {
       return `${new Date(t).toLocaleString().replace(/:\d{1,2}$/, ' ')} 创建`;
     }
   },
-  sockets: {
-    connect() {
-      console.log('socket connected from Page')
-    },
-    message(data) {
-      console.log(data)
-    }
-  },
   mounted() {
     axios.get(api.api.getInspects).then((res) => {
       let data = res.data

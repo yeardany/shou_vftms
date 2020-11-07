@@ -50,6 +50,7 @@ export default {
       y0: 0,
       x: 0,
       y: 0,
+      max_dist: 0,
       R: 6371.14,
       data_loc: [],
       locationDescribe: '',
@@ -162,7 +163,7 @@ export default {
               if (i === 0) {
                 htmlStr += '设备偏移距离:<br>'
                 htmlStr += parseFloat(param.value[0]).toFixed(2) + 'km<br>';
-                if (parseInt(param.value[0]) > 30) {
+                if (parseInt(param.value[0]) > this.max_dist) {
                   htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
                   htmlStr += '<div style="border: 1px solid #ff0000"></div>';
                 }
@@ -186,7 +187,7 @@ export default {
           data: [[0, 0], [this.dist, this.angles]],
           itemStyle: {
             color: (c) => {
-              if (this.dist > 30)
+              if (this.dist > this.max_dist)
                 return '#ff0000';
               else
                 return '#05a1f8';
@@ -217,7 +218,7 @@ export default {
             let htmlStr = '';
             htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
             if ((params.value[0] === "0.00" || params.value[0] === 0.00)
-              &&(params.value[1] === "0.00" || params.value[1] === 0.00))
+              && (params.value[1] === "0.00" || params.value[1] === 0.00))
               htmlStr += `设备位于标准点,<br>热力值为${params.value[2]}`;
             else
               htmlStr += `设备在偏移z至此处,<br>热力值为${params.value[2]}`;
@@ -271,14 +272,14 @@ export default {
           type: 'inside',
           xAxisIndex: 0,
           filterMode: 'empty',
-          minSpan:30,
-          maxSpan:100
+          minSpan: 30,
+          maxSpan: 100
         }, {
           type: 'inside',
           yAxisIndex: 0,
           filterMode: 'empty',
-          minSpan:30,
-          maxSpan:100
+          minSpan: 30,
+          maxSpan: 100
         }],
         series: [{
           name: '该位置偏移频率',
@@ -358,14 +359,14 @@ export default {
           type: 'inside',
           xAxisIndex: 0,
           filterMode: 'empty',
-          minSpan:30,
-          maxSpan:100
+          minSpan: 30,
+          maxSpan: 100
         }, {
           type: 'inside',
           yAxisIndex: 0,
           filterMode: 'empty',
-          minSpan:30,
-          maxSpan:100
+          minSpan: 30,
+          maxSpan: 100
         }],
         series: [{
           name: 'xy_data',
@@ -385,7 +386,52 @@ export default {
       }
     }
   },
+  sockets: {
+    connect() {
+      console.log('socket connected from Page')
+    },
+    message(data) {
+
+      if (Object.prototype.toString.call(data) !== '[object Object]') return
+      if (!data['oLocation'] || !data['pLocation'] || !data['dist']) return
+
+      // 收到服务端新数据重新渲染
+      this.render(data)
+    }
+  },
   methods: {
+    render(data) {
+      let
+        x0 = data['oLocation'][0],
+        y0 = data['oLocation'][1],
+        x = data['pLocation'][0],
+        y = data['pLocation'][1],
+        data_loc = data['lHistory'],
+        max_dist = data['dist']
+
+      // 请求获得数据赋值
+      this.x0 = x0;
+      this.y0 = y0;
+      this.x = x;
+      this.y = y;
+      this.max_dist = max_dist;
+      this.data_loc = data_loc;
+      this.locationDescribe = `下列各图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
+
+      // 手动渲染图表
+      const op = this.$refs.op
+      const op1 = this.$refs.op1
+      const op2 = this.$refs.op2
+      const op3 = this.$refs.op3
+
+      op.mergeOptions(this.option, true)
+      op1.mergeOptions(this.option1, true)
+      op2.mergeOptions(this.option2, true)
+      op3.mergeOptions(this.option3, true)
+
+      // 清空热力图计算数据
+      this.resetHeat()
+    },
     resetHeat() {
       this.heat.reset()
     }
@@ -410,34 +456,7 @@ export default {
         if (data === [] || data === undefined || eq1 === undefined)
           throw {'message': '数据库连接失败'}
 
-        let
-          x0 = eq1['oLocation'][0],
-          y0 = eq1['oLocation'][1],
-          x = eq1['pLocation'][0],
-          y = eq1['pLocation'][1],
-          data_loc = eq1['lHistory']
-
-        // 请求获得数据赋值
-        this.x0 = x0;
-        this.y0 = y0;
-        this.x = x;
-        this.y = y;
-        this.data_loc = data_loc;
-        this.locationDescribe = `下列各图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
-
-        // 手动渲染图表
-        const op = this.$refs.op
-        const op1 = this.$refs.op1
-        const op2 = this.$refs.op2
-        const op3 = this.$refs.op3
-
-        op.mergeOptions(this.option, true)
-        op1.mergeOptions(this.option1, true)
-        op2.mergeOptions(this.option2, true)
-        op3.mergeOptions(this.option3, true)
-
-        // 清空热力图计算数据
-        this.resetHeat()
+        this.render(eq1)
 
         setTimeout(() => {
           this.$notify.clear()
