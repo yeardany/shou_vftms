@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <NavBar>
       <template #left>
         <van-icon name="arrow-left" size="18"/>
@@ -8,346 +9,259 @@
         天气详情
       </template>
     </NavBar>
-    <div class="wrap">
-      <div class="sky-top">
-        <van-icon name="location-o" size="20"/>
-        {{ cityName }}
-      </div>
-      <div class="sky-condition">
-        <div class="condition-item">
-          <span class="temp">{{ cityTemp }}</span>
-          <span class="status">{{ cityCondition }}</span>
-        </div>
-        <div class="condition-item">
-          <span class="spec"><i class="iconfont icon-feng-"></i> {{ cityWind }}</span>
-          <span class="spec"><i class="iconfont icon-IOTtubiao_huabanfuben"></i> {{ cityHumidity }}%</span>
-          <span class="spec"><i class="iconfont icon-qiya"></i> {{ cityPressure }}hPa</span>
-        </div>
-        <div class="condition-item">
-          <span class="spec">温馨提示: {{ tips }}</span>
+    <div class="hxp-weather1 ">
+
+      <div class="hxp-weather-header">
+        <!--      <img src="../../assets/images/weather_icon_qing.jpg" class="hxp-weather-header-left">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[0]">{{ item }}</li>
+          </ol>
         </div>
       </div>
-      <div class="sky-prediction">
-        <div class="prediction-item" v-for="(item, index) in forecastList.slice(1, 3)" :key="index">
-          <div class="prediction-box">
-            <div class="prediction-left">
-              <p>{{ index === 0 ? '今天' : '明天' }}</p>
-              <p>{{ item.wea }}</p>
-            </div>
-            <div class="prediction-right">
-              <p>{{ item.tem1 }}/{{ item.tem2 }}</p>
-              <p>
-                <svg-icon :icon-class="item.wea | handleIcon"/>
-              </p>
-            </div>
-          </div>
+      <div class="text-center hxp-weather-footer1">
+        <div class="hxp-weather-footer1-left">
+          <ol>
+            <li v-for="item in weatherData[1]">{{ item.day + item.wea + item.tem }}</li>
+          </ol>
         </div>
-      </div>
-      <div class="sky-chart">
-        <div class="label">未来一周预报</div>
-        <div class="chart-wrap">
-          <div class="chart-item" v-for="(forecastValue, index) in forecastList" :key="index">
-            <p>{{ forecastValue.date | handleWeek(index) }}</p>
-            <p>{{ forecastValue.date | handleDay }}</p>
-            <p>{{ forecastValue.wea }}</p>
-            <div>
-              <svg-icon :icon-class="forecastValue.wea | handleIcon"/>
-            </div>
-          </div>
+        <div class="hxp-weather-footer1-right">
+          <ol>
+            <li v-for="item in weatherData[1]">{{ item.win + item.win_speed }}</li>
+          </ol>
         </div>
       </div>
     </div>
-    <div class="sky-hours">
-      <div class="label">24小时预报</div>
-      <v-chart :style="{width: containerWidth + 'px',height: 260 + 'px' }" :options="option"/>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[2]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[3]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[4]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[5]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[6]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="hxp-weather2 ">
+      <div class="hxp-weather-header">
+        <!--              <img :src="weather_weatherimg"  class="hxp-weather-header-left" alt="">-->
+        <div class="hxp-weather-header-right">
+          <ol>
+            <li v-for="item in weatherData[7]">{{ item }}</li>
+          </ol>
+        </div>
+      </div>
+      >>>>>>> 6850fb3eef2f9a41a42672bda2370c8bd777412c
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
-import SvgIcon from '../../layout/SvgIcon.vue'
-import ECharts from 'vue-echarts'
-import 'echarts/lib/chart/line'
+
 import axios from 'axios'
 
 export default {
   name: 'weatherDetail',
   data() {
-    return {
-      cityName: null,
-      cityTemp: null, // 气温
-      cityCondition: null, // 状态
-      cityWind: null, // 风力
-      cityHumidity: null, // 湿度
-      cityPressure: null, // 气压
-      tips: null,
-      forecastList: [],
-      xAxis: [],
-      yAxis: [],
-      containerWidth: window.screen.width
-    }
+    return {}
   },
   components: {
-    SvgIcon,
-    NavBar,
-    'v-chart': ECharts
+    NavBar
   },
   mounted() {
-    axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101020100",
-    ).then((d) => {
-      let resData = d.data,
-        weatherData = resData.data,
-        today = weatherData[0],
-        xAxis = [],
-        yAxis = [];
-
-      this.forecastList = weatherData
-      this.cityName = resData.city
-      this.cityTemp = today.tem
-      this.cityCondition = today.wea
-      this.cityWind = today.win_speed
-      this.cityHumidity = today.humidity
-      this.cityPressure = '1026'
-      this.tips = today.air_tips
-
-      today.hours.map(({day, tem, wea, win, win_speed}) => {
-        xAxis.push(day)
-        yAxis.push(
-          {
-            'value': parseInt(tem.replace(/℃/, '')),
-            'day': day,
-            'des': wea + '</br>温度:' + tem,
-            'win': win + '' + win_speed
-          }
-        )
-      })
-
-      this.xAxis = xAxis
-      this.yAxis = yAxis
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0
+    });
+    axios.get(this.url).then((d) => {
+      Toast.clear()
+      let data = d.data
+      this.weatherData =
+        [
+          ["日期：" + data["data"][0]["date"],
+            "天气：" + data["data"][0]["wea"],
+            "温度：" + data["data"][0]["tem2"] + "~" + data["data"][0]["tem1"] + "°C",
+            "风向：" + data["data"][0]["win"]],
+          data["data"][0]["hours"],
+          ["日期：" + data["data"][1]["date"],
+            "天气：" + data["data"][1]["wea"],
+            "温度：" + data["data"][1]["tem2"] + "~" + data["data"][1]["tem1"] + "°C",
+            "风向：" + data["data"][1]["win"]],
+          ["日期：" + data["data"][2]["date"],
+            "天气：" + data["data"][2]["wea"],
+            "温度：" + data["data"][2]["tem2"] + "~" + data["data"][2]["tem1"] + "°C",
+            "风向：" + data["data"][2]["win"]],
+          ["日期：" + data["data"][3]["date"],
+            "天气：" + data["data"][3]["wea"],
+            "温度：" + data["data"][3]["tem2"] + "~" + data["data"][3]["tem1"] + "°C",
+            "风向：" + data["data"][3]["win"]],
+          ["日期：" + data["data"][4]["date"],
+            "天气：" + data["data"][4]["wea"],
+            "温度：" + data["data"][4]["tem2"] + "~" + data["data"][0]["tem1"] + "°C",
+            "风向：" + data["data"][4]["win"]],
+          ["日期：" + data["data"][5]["date"],
+            "天气：" + data["data"][5]["wea"],
+            "温度：" + data["data"][5]["tem2"] + "~" + data["data"][5]["tem1"] + "°C",
+            "风向：" + data["data"][5]["win"]],
+          ["日期：" + data["data"][6]["date"],
+            "天气：" + data["data"][6]["wea"],
+            "温度：" + data["data"][6]["tem2"] + "~" + data["data"][6]["tem1"] + "°C",
+            "风向：" + data["data"][6]["win"]]
+        ]
     })
   },
-  computed: {
-    option() {
-      return {
-        backgroundColor: '#72ade0',
-        tooltip: {
-          trigger: 'axis',
-          formatter: (params) => {
-            let html = ''
-            params.forEach((x) => {
-              html += `${x.data.day}</br><div style="color: #fff">${x.data.des}</br>${x.data.win}</div>`
-            })
-            return html
-          }
-        },
-        xAxis: {
-          type: 'category',
-          data: this.xAxis,
-          axisLine: {
-            lineStyle: {
-              color: '#fff'
-            }
-          },
-          splitLine: {
-            show: false
-          }
-        },
-        yAxis: {
-          type: 'value',
-          color: '#fff',
-          label: true,
-          show: false,
-          axisLine: {
-            lineStyle: {
-              color: '#fff',
-            }
-          },
-          splitLine: {
-            show: false
-          }
-        },
-        series: [{
-          data: this.yAxis,
-          type: 'line',
-          color: '#fff',
-          smooth: true,
-          itemStyle: {normal: {label: {show: true}}}
-        }]
-      };
-    }
-  },
-  filters: {
-    handleWeek(date, index) {
-      const dayArr = ['今天', '明天', '后天']
-      const weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-      let myDate = date.replace(/-/g, '/')
-      let getDay = new Date(myDate).getDay()
-      return index < 2 ? dayArr[index] : weekArr[getDay]
-    },
-    handleDay(date) {
-      return date.replace(/-/g, '/').substr(5)
-    },
-    handleIcon(value) {
-      let weatherStr = '晴多云雨雪阴'
-      let weatherIconArr = ['tianqi-qing', 'duoyun', 'tianqi-dayu', 'tianqi-daxue', 'tianqi-yintian']
-      let weatherIndex = weatherStr.indexOf(value)
-      switch (weatherIndex) {
-        case 0:
-          return weatherIconArr[0]
-        case 1:
-          return weatherIconArr[1]
-        case 3:
-          return weatherIconArr[2]
-        case 4:
-          return weatherIconArr[3]
-        case 5:
-          return weatherIconArr[4]
-        default:
-          return weatherIconArr[4]
-      }
-    }
-  }
 }
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 
-.wrap {
-  height: 100%
+* {
+  padding: 0px;
+  margin: 0px;
 }
 
-text-ellipsis() {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+ol li,
+ul li {
+  list-style: none;
+}
+
+/* --------------天气卡片区------------ */
+.hxp-weather1 {
+  margin: 1rem auto;
+  color: #394568;
+  background: linear-gradient(to bottom, #49d0c1 40%, #28de7f 100%);
+  border-radius: 5px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+  width: 80%;
+  height: 15rem;
+  align-items: flex-end;
+  transition: all 0.3s ease-in-out;
   overflow: hidden;
+  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-.sky-top {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background-color: rgb(114, 173, 224);
-  font-size: 16px;
-  color: #fff;
-  font-weight 500;
-  background-image: -webkit-linear-gradient(top, #a7d5ffb8, #72ade0);
+.hxp-weather2 {
+  margin: 1rem auto;
+  color: #394568;
+  background: linear-gradient(to bottom, #49d0c1 40%, #28de7f 100%);
+  border-radius: 5px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+  width: 80%;
+  height: 7rem;
+  align-items: flex-end;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-.label {
-  display: flex;
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
+.hxp-weather-header {
+  width: 100%;
+  height: 7rem;
 }
 
-.sky-condition {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  background-color: rgb(114, 173, 224);
-  color: #fff;
-
-  .condition-item {
-    justify-content: flex-start;
-    padding: 0 16px;
-    margin: 5px 0;
-    color: #fff;
-    font-weight 500
-
-    .temp {
-      font-size: 80px;
-      font-weight: 100;
-      margin-right: 20px;
-    }
-
-    .status {
-      font-size: 25px;
-    }
-
-    .spec {
-      font-size: 15px;
-    }
-  }
+.hxp-weather-header-left {
+  width: 50%;
+  height: 7rem;
+  float: left;
 }
 
-.sky-prediction {
-  display: flex;
-  background-color: rgb(114, 173, 224);
-
-  .prediction-item {
-    flex: 1;
-    width: 50%;
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
-
-    .prediction-box {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 0 16px;
-
-      .prediction-left, .prediction-right {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 100%;
-        color: #fff;
-
-        p {
-          width: 100%;
-          text-ellipsis();
-        }
-      }
-
-      .prediction-left {
-        justify-content: flex-start;
-
-        p:nth-child(2) {
-          margin-top: 0
-        }
-      }
-
-      .prediction-right {
-        justify-content: flex-end;
-
-        p {
-          margin-top: 0
-        }
-      }
-    }
-  }
+.hxp-weather-header-right {
+  width: 50%;
+  height: 7rem;
+  float: right;
 }
 
-.sky-chart {
-  padding: 16px;
-  background-color: rgb(114, 173, 224);
-  color: #fff;
-
-  .chart-wrap {
-    display: flex;
-    margin: 0 -10px;
-
-    .chart-item {
-      flex: 1;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 500;
-
-      p:nth-child(3) {
-        font-size: 12px;
-      }
-    }
-  }
+.hxp-weather-footer1 {
+  width: 100%;
+  height: 9rem;
+  background: whitesmoke;
 }
 
-.sky-hours {
-  background-color: rgb(114, 173, 224);
-  color: #fff;
-
-  .label {
-    padding: 10px 16px;
-  }
+.hxp-weather-footer2 {
+  width: 100%;
+  height: 5rem;
+  background: whitesmoke;
 }
+
+.hxp-weather-footer1-left {
+  width: 50%;
+  height: 9rem;
+  float: left;
+}
+
+.hxp-weather-footer1-right {
+  width: 50%;
+  height: 9rem;
+  float: right;
+}
+
+.hxp-weather-footer2-left {
+  width: 50%;
+  height: 5rem;
+  float: left;
+}
+
+.hxp-weather-footer2-right {
+  width: 50%;
+  height: 5rem;
+  float: right;
+}
+
+.text-center {
+  font-size: 5px;
+}
+
+
+>>> >>> >
+
+6850
+fb3eef2f9a41a42672bda2370c8bd777412c
 </style>
