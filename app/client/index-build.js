@@ -6,6 +6,8 @@ import App from './app.vue'
 import createRouter from './router/router'
 import api from '../config/api'
 import 'vant/lib/index.css'
+import './assets/iconfont/iconfont.css'
+import './assets/iconfont/iconfont.js'
 
 import {Notify, Dialog} from 'vant';
 
