@@ -33,7 +33,7 @@ const config = {
         exclude: /node_modules/
       },
       {
-        test: /\.(gif|jpg|jpeg|png|svg|ttf)$/,
+        test: /\.(gif|jpg|jpeg|png|svg|ttf|eot|woff)$/,
         use: [
           {
             loader: 'url-loader',

@@ -21,6 +21,8 @@
       -moz-user-select: none; /*火狐*/
       -ms-user-select: none; /*IE10*/
       user-select: none;
+      -ms-touch-action: manipulation; /* IE10+ 禁止双击缩放 */
+      -webkit-overflow-scrolling: touch; /* ios顺畅滑动 */
     }
 
     input {
