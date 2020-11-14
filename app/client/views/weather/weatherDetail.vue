@@ -8,59 +8,61 @@
         天气详情
       </template>
     </NavBar>
-    <div class="wrap">
-      <div class="sky-top">
-        <van-icon name="location-o" size="20"/>
-        {{ cityName }}
-      </div>
-      <div class="sky-condition">
-        <div class="condition-item">
-          <span class="temp">{{ cityTemp }}</span>
-          <span class="status">{{ cityCondition }}</span>
+    <van-skeleton :loading="loading">
+      <div class="wrap">
+        <div class="sky-top">
+          <van-icon name="location-o" size="20"/>
+          {{ cityName }}
         </div>
-        <div class="condition-item">
-          <span class="spec"><i class="iconfont icon-feng-"></i> {{ cityWind }}</span>
-          <span class="spec"><i class="iconfont icon-IOTtubiao_huabanfuben"></i> {{ cityHumidity }}%</span>
-          <span class="spec"><i class="iconfont icon-qiya"></i> {{ cityPressure }}hPa</span>
+        <div class="sky-condition">
+          <div class="condition-item">
+            <span class="temp">{{ cityTemp }}</span>
+            <span class="status">{{ cityCondition }}</span>
+          </div>
+          <div class="condition-item">
+            <span class="spec"><i class="iconfont icon-feng-"></i> {{ cityWind }}</span>
+            <span class="spec"><i class="iconfont icon-IOTtubiao_huabanfuben"></i> {{ cityHumidity }}%</span>
+            <span class="spec"><i class="iconfont icon-qiya"></i> {{ cityPressure }}hPa</span>
+          </div>
+          <div class="condition-item">
+            <span class="spec">温馨提示: {{ tips }}</span>
+          </div>
         </div>
-        <div class="condition-item">
-          <span class="spec">温馨提示: {{ tips }}</span>
-        </div>
-      </div>
-      <div class="sky-prediction">
-        <div class="prediction-item" v-for="(item, index) in forecastList.slice(1, 3)" :key="index">
-          <div class="prediction-box">
-            <div class="prediction-left">
-              <p>{{ index === 0 ? '今天' : '明天' }}</p>
-              <p>{{ item.wea }}</p>
+        <div class="sky-prediction">
+          <div class="prediction-item" v-for="(item, index) in forecastList.slice(1, 3)" :key="index">
+            <div class="prediction-box">
+              <div class="prediction-left">
+                <p>{{ index === 0 ? '今天' : '明天' }}</p>
+                <p>{{ item.wea }}</p>
+              </div>
+              <div class="prediction-right">
+                <p>{{ item.tem1 }}/{{ item.tem2 }}</p>
+                <p>
+                  <svg-icon :icon-class="item.wea | handleIcon"/>
+                </p>
+              </div>
             </div>
-            <div class="prediction-right">
-              <p>{{ item.tem1 }}/{{ item.tem2 }}</p>
-              <p>
-                <svg-icon :icon-class="item.wea | handleIcon"/>
-              </p>
+          </div>
+        </div>
+        <div class="sky-chart">
+          <div class="label">未来一周预报</div>
+          <div class="chart-wrap">
+            <div class="chart-item" v-for="(forecastValue, index) in forecastList" :key="index">
+              <p>{{ forecastValue.date | handleWeek(index) }}</p>
+              <p>{{ forecastValue.date | handleDay }}</p>
+              <p>{{ forecastValue.wea }}</p>
+              <div>
+                <svg-icon :icon-class="forecastValue.wea | handleIcon"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="sky-chart">
-        <div class="label">未来一周预报</div>
-        <div class="chart-wrap">
-          <div class="chart-item" v-for="(forecastValue, index) in forecastList" :key="index">
-            <p>{{ forecastValue.date | handleWeek(index) }}</p>
-            <p>{{ forecastValue.date | handleDay }}</p>
-            <p>{{ forecastValue.wea }}</p>
-            <div>
-              <svg-icon :icon-class="forecastValue.wea | handleIcon"/>
-            </div>
-          </div>
-        </div>
+      <div class="sky-hours">
+        <div class="label">24小时预报</div>
+        <v-chart :style="{width: containerWidth + 'px',height: 260 + 'px' }" :options="option"/>
       </div>
-    </div>
-    <div class="sky-hours">
-      <div class="label">24小时预报</div>
-      <v-chart :style="{width: containerWidth + 'px',height: 260 + 'px' }" :options="option"/>
-    </div>
+    </van-skeleton>
   </div>
 </template>
 
@@ -70,11 +72,13 @@ import SvgIcon from '../../layout/SvgIcon.vue'
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import axios from 'axios'
+import {Skeleton} from 'vant';
 
 export default {
   name: 'weatherDetail',
   data() {
     return {
+      loading: true,
       cityName: null,
       cityTemp: null, // 气温
       cityCondition: null, // 状态
@@ -94,38 +98,54 @@ export default {
     'v-chart': ECharts
   },
   mounted() {
-    axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101020100",
-    ).then((d) => {
-      let resData = d.data,
-        weatherData = resData.data,
-        today = weatherData[0],
-        xAxis = [],
-        yAxis = [];
 
-      this.forecastList = weatherData
-      this.cityName = resData.city
-      this.cityTemp = today.tem
-      this.cityCondition = today.wea
-      this.cityWind = today.win_speed
-      this.cityHumidity = today.humidity
-      this.cityPressure = '1026'
-      this.tips = today.air_tips
+    this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
-      today.hours.map(({day, tem, wea, win, win_speed}) => {
-        xAxis.push(day)
-        yAxis.push(
-          {
-            'value': parseInt(tem.replace(/℃/, '')),
-            'day': day,
-            'des': wea + '</br>温度:' + tem,
-            'win': win + '' + win_speed
-          }
-        )
+    setTimeout(() => {
+      axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101020100",
+      ).then((d) => {
+        let resData = d.data,
+          weatherData = resData.data,
+          today = weatherData[0],
+          xAxis = [],
+          yAxis = [];
+
+        this.forecastList = weatherData
+        this.cityName = resData.city
+        this.cityTemp = today.tem
+        this.cityCondition = today.wea
+        this.cityWind = today.win_speed
+        this.cityHumidity = today.humidity
+        this.cityPressure = '1026'
+        this.tips = today.air_tips
+
+        today.hours.map(({day, tem, wea, win, win_speed}) => {
+          xAxis.push(day)
+          yAxis.push(
+            {
+              'value': parseInt(tem.replace(/℃/, '')),
+              'day': day,
+              'des': wea + '</br>温度:' + tem,
+              'win': win + '' + win_speed
+            }
+          )
+        })
+
+        this.xAxis = xAxis
+        this.yAxis = yAxis
+        this.loading = false
+
+        setTimeout(() => {
+          this.$notify.clear()
+        }, 500);
+
+      }).catch((e) => {
+        this.$notify.clear()
+        this.$notify({type: 'warning', message: e.message, duration: 1500});
       })
 
-      this.xAxis = xAxis
-      this.yAxis = yAxis
-    })
+    }, 500)
+
   },
   computed: {
     option() {
