@@ -102,7 +102,7 @@ export default {
     this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
     setTimeout(() => {
-      axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101020100",
+      axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101121301",
       ).then((d) => {
         let resData = d.data,
           weatherData = resData.data,

@@ -13,10 +13,8 @@ export default {
   data() {
     return {
       list: [
-        {id: '0', name: '岛屿站房左后'},
-        {id: '1', name: '岛屿站房右后'},
-        {id: '2', name: '岛屿右前方球机'},
-        {id: '3', name: '岛屿站房左前方'}
+        {id: '0', name: '海参育苗基地'},
+        {id: '1', name: '鲍鱼育苗基地'}
       ]
     }
   },

@@ -2,7 +2,7 @@
   <div>
     <NavBar>
       <template #title>
-        鲍鱼生产智慧服务平台
+        智慧生态养殖在线服务平台
       </template>
     </NavBar>
     <van-cell-group>
@@ -24,24 +24,19 @@ export default {
     return {
       list: [
         {
-          name: '永丰4水质',
+          name: '桑沟湾1号监测点水质',
           temperature: '温度：14.50℃',
-          time: '2019/12/28 18:31:18 更新'
+          time: '2020/11/10 18:31:18 更新'
         },
         {
-          name: '永丰3水质',
-          temperature: '温度：14.50℃',
-          time: '2019/12/28 18:31:18 更新'
-        },
-        {
-          name: '渔排水质1号',
-          temperature: '温度：14.50℃',
-          time: '2019/12/28 18:31:18 更新'
+          name: '桑沟湾2号监测点水质',
+          temperature: '温度：15.50℃',
+          time: '2020/11/12 11:20:06 更新'
         },
         {
           name: '育苗基地水质',
-          temperature: '温度：14.50℃',
-          time: '2019/12/28 18:31:18 更新'
+          temperature: '温度：13.50℃',
+          time: '2020/11/14 10:50:12 更新'
         }]
     }
   },

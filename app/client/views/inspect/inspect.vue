@@ -2,7 +2,7 @@
   <div>
     <NavBar :methodName="newInspect">
       <template #title>
-        鲍鱼生产智慧服务平台
+        智慧生态养殖在线服务平台
       </template>
       <template #right>
         新增巡检
