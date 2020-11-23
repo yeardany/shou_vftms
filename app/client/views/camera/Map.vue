@@ -42,11 +42,45 @@ export default {
     return {
       x0: 0,
       y0: 0,
+      x : 0,
+      y : 0,
+      max_dist: 0,
+      R: 6371.14,
+      data_loc: [],
       locationDescribe: '',
       containerWidth: window.screen.width
     }
   },
   computed: {
+    init() {
+      return new LocationCompute(this.x0, this.y0, this.x, this.y, this.R)
+    },
+    heat() {
+      let h = new heatMap(this.init, this.data_loc)
+      h.getHeatMapData()
+      return h
+    },
+    dist() {
+      return this.init.getDistance(this.x0, this.y0, this.x, this.y)
+    },
+    angles() {
+      let s_dist = this.init.getDistance(this.x0, this.y, this.x, this.y);
+      this.init.r_rad = Math.asin(s_dist / this.dist)
+      let angle = this.init.r_rad.toFixed(2)
+      return this.init.getAngles(angle)
+    },
+    final_data() {
+      return this.heat.final_data
+    },
+    xy_data() {
+      return this.heat.xy_data
+    },
+    time() {
+      return this.heat.time
+    },
+    loc() {
+      return this.heat.loc
+    },
     option() {
       return {
         xAxis: {
@@ -123,6 +157,10 @@ export default {
               if (i === 0) {
                 htmlStr += '设备偏移距离:<br>'
                 htmlStr += parseFloat(param.value[0]).toFixed(2) + 'km<br>';
+                if (parseInt(param.value[0]) > this.max_dist) {
+                  htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
+                  htmlStr += '<div style="border: 1px solid #ff0000"></div>';
+                }
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += '设备偏移角度:<br>' + param.value[1] + '°';
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
@@ -138,15 +176,28 @@ export default {
         },
         series: [{
           coordinateSystem: 'polar',
-          name: '中心位置',
+          name: '偏移',
           type: 'scatter',
-          data: [[0, 0]],
-          itemStyle: {color: '#05a1f8'}
+          data: [[0, 0], [this.dist, this.angles]],
+          itemStyle: {
+            color: (c) => {
+              if (this.dist > this.max_dist)
+                return '#ff0000';
+              else
+                return '#05a1f8';
+            }
+          }
         }, {
           coordinateSystem: 'polar',
-          name: '中心经纬度',
+          name: '偏移经纬度',
           type: 'scatter',
-          data: [[0, `${this.x0}°N,${this.y0}°E`]]
+          data: [[0, `${this.x0}°N,${this.y0}°E`], [this.dist, `${this.x}°N,${this.y}°E`]]
+        },{
+          coordinateSystem: 'polar',
+          name: '中心',
+          type: 'scatter',
+          data: [0, 0],
+          itemStyle: {color: '#05a1f8'}
         }]
       }
     },
@@ -169,6 +220,10 @@ export default {
       let
         x0 = data['oLocation'][0],
         y0 = data['oLocation'][1],
+        x = data['pLocation'][0],
+        y = data['pLocation'][1],
+        data_loc = data['lHistory'],
+        max_dist = data['dist'],
         //修正数据
         x1 = Math.floor(x0), //x整数部分
         y1 = Math.floor(y0), //y整数部分
@@ -178,9 +233,13 @@ export default {
       // 请求获得数据赋值
       this.x0 = x2;
       this.y0 = y2;
+      this.x = x.toFixed(3);
+      this.y = y.toFixed(3);
+      this.max_dist = max_dist;
+      this.data_loc = data_loc;
       this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${x2}°N,${y2}°E)<br><br>`;
 
-      console.log(this.x0,this.y0)
+      console.log(this.x0,this.y0,this.x,this.y)
       console.log(this.locationDescribe)
 
       // 手动渲染图表
@@ -190,7 +249,12 @@ export default {
       op.mergeOptions(this.option, true)
       op1.mergeOptions(this.option1, true)
 
+      // 清空热力图计算数据
+      this.resetHeat()
     },
+    resetHeat() {
+      this.heat.reset()
+    }
   },
   mounted() {
 
