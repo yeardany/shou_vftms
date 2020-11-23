@@ -106,7 +106,7 @@ export default [
     component: InspectDetail,
   },
   {
-    path: '/map',
+    path: '/map/:id',
     component: Map
   },
   {
