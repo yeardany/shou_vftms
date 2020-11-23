@@ -455,7 +455,7 @@ export default {
 
       axios.post(api.api.getEquipments, {
         'pushID': this.$pushID,
-        condition: {'_id': this.$route.params.id}
+        'condition': {'_id': this.$route.params.id}
 
       }).then((res) => {
         let data = res.data
