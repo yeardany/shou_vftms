@@ -50,8 +50,8 @@ export default {
     return {
       x0: 0,
       y0: 0,
-      x : 0,
-      y : 0,
+      x: 0,
+      y: 0,
       max_dist: 0,
       R: 6371.14,
       data_loc: [],
@@ -200,7 +200,7 @@ export default {
           name: '偏移经纬度',
           type: 'scatter',
           data: [[0, `${this.x0}°N,${this.y0}°E`], [this.dist, `${this.x}°N,${this.y}°E`]]
-        },{
+        }, {
           coordinateSystem: 'polar',
           name: '中心',
           type: 'scatter',
@@ -420,7 +420,7 @@ export default {
       this.data_loc = data_loc;
       this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`;
 
-      console.log(this.x0,this.y0,this.x,this.y)
+      console.log(this.x0, this.y0, this.x, this.y)
       console.log(this.locationDescribe)
 
       // 手动渲染图表
@@ -430,7 +430,9 @@ export default {
       op1.mergeOptions(this.option1, true)
 
       console.log(data_loc.length)
-      if(data_loc.length!=0){
+
+      // 判断历史数据是否为空
+      if (data_loc.length !== 0) {
         const op2 = this.$refs.op2
         const op3 = this.$refs.op3
         op2.mergeOptions(this.option2, true)
@@ -450,15 +452,18 @@ export default {
 
     // 防止通知与地图同时渲染卡顿，延迟半秒请求
     setTimeout(() => {
-      axios.post(api.api.getEquipments, {'pushID': this.$pushID}).then((res) => {
-        let data = res.data,
-          eq1 = data[0];
 
-        if (data === [] || data === undefined || eq1 === undefined)
+      axios.post(api.api.getEquipments, {
+        'pushID': this.$pushID,
+        condition: {'_id': this.$route.params.id}
+
+      }).then((res) => {
+        let data = res.data
+
+        if (data === [] || data === undefined)
           throw {'message': '数据库连接失败'}
 
-        console.log(eq1)
-        this.render(eq1)
+        this.render(data)
 
         setTimeout(() => {
           this.$notify.clear()
