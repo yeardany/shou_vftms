@@ -18,6 +18,14 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op1"/>
+      <!--历史数据为空不显示-->
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
+               manual-update
+               ref="op2"/>
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
+               manual-update
+               ref="op3"/>
+
     </template>
   </div>
 </template>
@@ -201,6 +209,184 @@ export default {
         }]
       }
     },
+    option2() {
+      return {
+        title: {
+          text: '设备偏移情况热力图'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: (params) => {
+            let htmlStr = '';
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            if ((params.value[0] === "0.00" || params.value[0] === 0.00)
+              && (params.value[1] === "0.00" || params.value[1] === 0.00))
+              htmlStr += `设备位于标准点,<br>热力值为${params.value[2]}`;
+            else
+              htmlStr += `设备在偏移z至此处,<br>热力值为${params.value[2]}`;
+            htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            return htmlStr;
+          }
+        },
+        xAxis: {
+          type: 'value',
+          max: 50,
+          min: -50,
+          name: "距标准点横向距离:km",
+          nameLocation: "middle",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [10, 10, 10, 10]
+          },
+          axisLine: {
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          splitNumber: 10
+        },
+        yAxis: {
+          type: 'value',
+          max: 50,
+          min: -50,
+          name: "距标准点横向距离:km",
+          nameLocation: "middle",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [10, 10, 10, 10]
+          },
+          axisLine: {
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          splitNumber: 10
+        },
+        grid: {
+          left: '17%'
+        },
+        visualMap: {
+          min: 0,
+          max: 1,
+          inRange: {
+            color: ['#abd9e9', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027',]
+          }
+        },
+        dataZoom: [{
+          type: 'inside',
+          xAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan: 30,
+          maxSpan: 100
+        }, {
+          type: 'inside',
+          yAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan: 30,
+          maxSpan: 100
+        }],
+        series: [{
+          name: '该位置偏移频率',
+          type: 'heatmap',
+          itemStyle: {opacity: 0.6},
+          data: this.final_data,
+          emphasis: {
+            itemStyle: {
+              borderColor: '#000',
+              borderWidth: 1
+            }
+          },
+          progressive: 100, //渲染频率
+          animation: false //动画
+        }]
+      }
+    },
+    option3() {
+      return {
+        title: {
+          text: '设备随时间位置变化图'
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: (params) => {
+            let htmlStr = '';
+            for (let i = 0; i < params.length; i++) {
+              let param = params[i];
+              if (param.componentIndex === 1) {
+                if (param.value[0] === "0.00" || param.value[0] === 0.00)
+                  htmlStr += `位于标准点处时间:<br>${param.value[1]}`;
+                else
+                  htmlStr += `偏移至此处时间:<br>${param.value[1]}`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              } else if (param.componentIndex === 2)
+                htmlStr += `此处经纬度:<br>${param.value[1]}`;
+            }
+            return htmlStr;
+          }
+        },
+        xAxis: {
+          min: -50,
+          max: 50,
+          type: 'value',
+          axisLine: {
+            onZero: true,
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "距标准点横向距离:km",
+          nameLocation: "middle",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [10, 10, 10, 10]
+          },
+        },
+        yAxis: {
+          min: -50,
+          max: 50,
+          type: 'value',
+          axisLine: {
+            onZero: true,
+            symbol: ['arrow', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "距标准点纵向距离:km",
+          nameLocation: "middle",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [10, 10, 10, 10]
+          },
+        },
+        grid: {
+          left: '15%'
+        },
+        dataZoom: [{
+          type: 'inside',
+          xAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan: 30,
+          maxSpan: 100
+        }, {
+          type: 'inside',
+          yAxisIndex: 0,
+          filterMode: 'empty',
+          minSpan: 30,
+          maxSpan: 100
+        }],
+        series: [{
+          name: 'xy_data',
+          type: 'line',
+          smooth: true,
+          symbolSize: 6,
+          data: this.xy_data
+        }, {
+          name: 'time',
+          type: 'line',
+          data: this.time
+        }, {
+          name: 'location',
+          type: 'line',
+          data: this.loc
+        }]
+      }
+    }
   },
   sockets: {
     connect() {
@@ -223,21 +409,16 @@ export default {
         x = data['pLocation'][0],
         y = data['pLocation'][1],
         data_loc = data['lHistory'],
-        max_dist = data['dist'],
-        //修正数据
-        x1 = Math.floor(x0), //x整数部分
-        y1 = Math.floor(y0), //y整数部分
-        x2 = (x1 + (x0 - x1).toFixed(4) *100/60).toFixed(3),
-        y2 = (y1 + (y0 - y1).toFixed(4) *100/60).toFixed(3);
+        max_dist = data['dist']
 
       // 请求获得数据赋值
-      this.x0 = x2;
-      this.y0 = y2;
+      this.x0 = x0.toFixed(3);
+      this.y0 = y0.toFixed(3);
       this.x = x.toFixed(3);
       this.y = y.toFixed(3);
       this.max_dist = max_dist;
       this.data_loc = data_loc;
-      this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${x2}°N,${y2}°E)<br><br>`;
+      this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`;
 
       console.log(this.x0,this.y0,this.x,this.y)
       console.log(this.locationDescribe)
@@ -245,9 +426,16 @@ export default {
       // 手动渲染图表
       const op = this.$refs.op
       const op1 = this.$refs.op1
-
       op.mergeOptions(this.option, true)
       op1.mergeOptions(this.option1, true)
+
+      console.log(data_loc.length)
+      if(data_loc.length!=0){
+        const op2 = this.$refs.op2
+        const op3 = this.$refs.op3
+        op2.mergeOptions(this.option2, true)
+        op3.mergeOptions(this.option3, true)
+      }
 
       // 清空热力图计算数据
       this.resetHeat()
@@ -264,7 +452,7 @@ export default {
     setTimeout(() => {
       axios.post(api.api.getEquipments, {'pushID': this.$pushID}).then((res) => {
         let data = res.data,
-          eq1 = data[2];
+          eq1 = data[0];
 
         if (data === [] || data === undefined || eq1 === undefined)
           throw {'message': '数据库连接失败'}
