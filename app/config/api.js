@@ -4,8 +4,9 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const api = {
   'getEquipments': isDev ? '/api/getEquipments' : `${apiAddress}/getEquipments`,
+  'getEquipmentById': isDev ? '/api/getEquipmentById' : `${apiAddress}/getEquipmentById`,
   'getInspects': isDev ? '/api/getInspects' : `${apiAddress}/getInspects`,
-  'addInspects': isDev ? '/api/addInspect' : `${apiAddress}/addInspect`,
+  'addInspects': isDev ? '/api/addInspect' : `${apiAddress}/addInspect`
 }
 
 module.exports = {

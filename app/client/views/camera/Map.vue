@@ -453,9 +453,9 @@ export default {
     // 防止通知与地图同时渲染卡顿，延迟半秒请求
     setTimeout(() => {
 
-      axios.post(api.api.getEquipments, {
+      axios.post(api.api.getEquipmentById, {
         'pushID': this.$pushID,
-        'condition': {'_id': this.$route.params.id}
+        'id': this.$route.params.id
 
       }).then((res) => {
         let data = res.data

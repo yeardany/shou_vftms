@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted() {
-    axios.post(api.api.getEquipments, {'pushID': this.$pushID}).then((res) => {
+    axios.get(api.api.getEquipments, {'pushID': this.$pushID}).then((res) => {
 
       this.list = res.data
 
