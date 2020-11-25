@@ -25,7 +25,6 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op3"/>
-
     </template>
   </div>
 </template>
@@ -420,23 +419,21 @@ export default {
       this.data_loc = data_loc;
       this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`;
 
-      console.log(this.x0, this.y0, this.x, this.y)
-      console.log(this.locationDescribe)
-
       // 手动渲染图表
       const op = this.$refs.op
       const op1 = this.$refs.op1
       op.mergeOptions(this.option, true)
       op1.mergeOptions(this.option1, true)
 
-      console.log(data_loc.length)
-
       // 判断历史数据是否为空
       if (data_loc.length !== 0) {
+
         const op2 = this.$refs.op2
         const op3 = this.$refs.op3
+
         op2.mergeOptions(this.option2, true)
         op3.mergeOptions(this.option3, true)
+
       }
 
       // 清空热力图计算数据
@@ -448,16 +445,19 @@ export default {
   },
   mounted() {
 
+    /**
+     * (x0, y0) : 浮标固定（初始）位置
+     * (x, y) : 浮标漂移（当前）位置
+     * data_loc : 浮标历史漂移位置记录，用于热力图
+     * @type {LocationCompute}
+     */
+
     this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
     // 防止通知与地图同时渲染卡顿，延迟半秒请求
     setTimeout(() => {
 
-      axios.post(api.api.getEquipmentById, {
-        'pushID': this.$pushID,
-        'id': this.$route.params.id
-
-      }).then((res) => {
+      axios.post(api.api.getEquipmentById, {'pushID': this.$pushID, 'id': this.$route.params.id}).then((res) => {
         let data = res.data
 
         if (data === [] || data === undefined)
