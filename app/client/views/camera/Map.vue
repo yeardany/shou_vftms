@@ -25,6 +25,13 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op3"/>
+      <!--新添时间与纬度、经度关系折线图-->
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
+               manual-update
+               ref="op4"/>
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
+               manual-update
+               ref="op5"/>
     </template>
   </div>
 </template>
@@ -55,7 +62,10 @@ export default {
       R: 6371.14,
       data_loc: [],
       locationDescribe: '',
-      containerWidth: window.screen.width
+      containerWidth: window.screen.width,
+      //新增时间和经纬度二维数据
+      data_j:[],
+      data_w:[]
     }
   },
   computed: {
@@ -222,7 +232,7 @@ export default {
               && (params.value[1] === "0.00" || params.value[1] === 0.00))
               htmlStr += `设备位于标准点,<br>热力值为${params.value[2]}`;
             else
-              htmlStr += `设备在偏移z至此处,<br>热力值为${params.value[2]}`;
+              htmlStr += `设备在偏移至此处,<br>热力值为${params.value[2]}`;
             htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
             return htmlStr;
           }
@@ -385,6 +395,128 @@ export default {
           data: this.loc
         }]
       }
+    },
+    option4() {
+      return {
+        title: {
+          text: '设备位置纬度随时间变化图'
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: (params) => {
+            let htmlStr = '';
+            for (let i = 0; i < params.length; i++) {
+              let param = params[i];
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              htmlStr += `时间:${param.value[0]}`;
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              htmlStr += `设备坐标纬度:<br>${param.value[1]}`;
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            }
+            return htmlStr;
+          }
+        },
+        xAxis: {
+          type: 'category',
+          axisLine: {
+            onZero: true,
+            symbol: ['none', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "时间",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [0, 10, 0, -10]
+          },
+        },
+        yAxis: {
+          min: 30,
+          max: 31,
+          type: 'value',
+          axisLine: {
+            onZero: true,
+            symbol: ['none', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "坐标纬度",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [15, 0, 0, 0]
+          },
+        },
+        grid: {
+          left: '15%'
+        },
+        series: [{
+          name: 'data_w',
+          type: 'line',
+          symbolSize: 6,
+          data: this.data_w
+        }]
+      }
+    },
+    option5() {
+      return {
+        title: {
+          text: '设备位置经度随时间变化图'
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: (params) => {
+            let htmlStr = '';
+            for (let i = 0; i < params.length; i++) {
+              let param = params[i];
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              htmlStr += `时间:${param.value[0]}`;
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              htmlStr += `设备坐标经度:<br>${param.value[1]}`;
+              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+            }
+            return htmlStr;
+          }
+        },
+        xAxis: {
+          type: 'category',
+          axisLine: {
+            onZero: true,
+            symbol: ['none', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "时间",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [0, 10, 0, -10]
+          },
+        },
+        yAxis: {
+          min: 121.5,
+          max: 122.5,
+          type: 'value',
+          axisLine: {
+            onZero: true,
+            symbol: ['none', 'arrow'],
+            symbolSize: [5, 7]
+          },
+          name: "坐标经度",
+          nameLocation: "end",
+          nameTextStyle: {
+            fontSize: 12,
+            padding: [15, 0, 0, 0]
+          },
+        },
+        grid: {
+          left: '15%'
+        },
+        series: [{
+          name: 'data_j',
+          type: 'line',
+          symbolSize: 6,
+          data: this.data_j
+        }]
+      }
     }
   },
   sockets: {
@@ -408,7 +540,11 @@ export default {
         x = data['pLocation'][0],
         y = data['pLocation'][1],
         data_loc = data['lHistory'],
-        max_dist = data['dist']
+        max_dist = data['dist'],
+        date = ['00:00','00:30','01:00','01:30','02:00','02:30','03:00','03:30','04:00','04:30','05:00','05:30',
+          '06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30',
+          '13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30',
+          '20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:30'];
 
       // 请求获得数据赋值
       this.x0 = x0.toFixed(3);
@@ -418,6 +554,11 @@ export default {
       this.max_dist = max_dist;
       this.data_loc = data_loc;
       this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`;
+      //creat data_w,data_j to use in op4,op5
+      for(let i=0;i<date.length;i++){
+        this.data_w.push([date[i],data_loc[i][0].toFixed(3)])
+        this.data_j.push([date[i],data_loc[i][1].toFixed(3)])
+      }
 
       // 手动渲染图表
       const op = this.$refs.op
@@ -430,10 +571,12 @@ export default {
 
         const op2 = this.$refs.op2
         const op3 = this.$refs.op3
-
+        const op4 = this.$refs.op4
+        const op5 = this.$refs.op5
         op2.mergeOptions(this.option2, true)
         op3.mergeOptions(this.option3, true)
-
+        op4.mergeOptions(this.option4, true)
+        op5.mergeOptions(this.option5, true)
       }
 
       // 清空热力图计算数据

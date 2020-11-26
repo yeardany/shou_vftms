@@ -73,8 +73,8 @@ class heatMap {
     }
 
     for (let i = 0; i < data_loc.length; i++) {
-      let x = data_loc[i][1].toFixed(2);
-      let y = data_loc[i][0].toFixed(2);
+      let x = data_loc[i][1].toFixed(3);
+      let y = data_loc[i][0].toFixed(3);
       let m_x = init.getDistance(init.x0, init.y0, init.x0, x);
       let m_y = init.getDistance(init.x0, init.y0, y, init.y0);
       //定位方向
@@ -89,9 +89,9 @@ class heatMap {
       //取折线图数据
       if (i % 5 === 0) {
         let xy_loc = y + '°N,' + x + '°E';
-        this.xy_data.push([m_x.toFixed(2), m_y.toFixed(2)]);
-        this.loc.push([m_x.toFixed(2), xy_loc]);
-        this.time.push([m_x.toFixed(2), this.date]);
+        this.xy_data.push([m_x.toFixed(3), m_y.toFixed(3)]);
+        this.loc.push([m_x.toFixed(3), xy_loc]);
+        this.time.push([m_x.toFixed(3), this.date]);
       }
       //取整
       m_x = Math.floor(m_x);
