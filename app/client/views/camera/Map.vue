@@ -11,9 +11,9 @@
     <template>
       <div>
         <b><span v-html="locationDescribe"></span></b>
-        <v-chart :style="{width: containerWidth + 'px',height: containerWidth * 0.3 + 'px' }"
-                 manual-update
-                 ref="op"/>
+        <!--        <v-chart :style="{width: containerWidth + 'px',height: containerWidth * 0.3 + 'px' }"-->
+        <!--                 manual-update-->
+        <!--                 ref="op"/>-->
       </div>
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
@@ -561,7 +561,7 @@ export default {
       this.y = y.toFixed(3);
       this.max_dist = max_dist;
       this.data_loc = data_loc;
-      this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
+      this.locationDescribe = `下图中心为原始位置:(${x0}°N,${y0}°E)<br>当前位置:(${x}°N,${y}°E)`;
 
       //creat data_w,data_j to use in op4,op5
       for (let i = 0; i < date.length; i++) {
@@ -570,7 +570,7 @@ export default {
       }
 
       // 手动渲染图表
-      const op = this.$refs.op
+      // const op = this.$refs.op
       const op1 = this.$refs.op1
       const op2 = this.$refs.op2
       // const op3 = this.$refs.op3
@@ -579,7 +579,7 @@ export default {
 
       op1.mergeOptions(this.option1, true)
       if (renderAll) {
-        op.mergeOptions(this.option, true)
+        // op.mergeOptions(this.option, true)
         op2.mergeOptions(this.option2, true)
         // op3.mergeOptions(this.option3, true)
         op4.mergeOptions(this.option4, true)
@@ -632,6 +632,7 @@ export default {
 <style scoped>
 span {
   display: block;
-  padding: 0 1.5%
+  padding: 0 1.5%;
+  color: rgb(50, 50, 50)
 }
 </style>
