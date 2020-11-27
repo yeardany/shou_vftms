@@ -18,13 +18,12 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op1"/>
-      <!--历史数据为空不显示-->
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op2"/>
-      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
-               manual-update
-               ref="op3"/>
+      <!--      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"-->
+      <!--               manual-update-->
+      <!--               ref="op3"/>-->
       <!--新添时间与纬度、经度关系折线图-->
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
@@ -533,7 +532,7 @@ export default {
     }
   },
   methods: {
-    render(data) {
+    render(data, renderAll = false) {
 
       if (!(data && data['pLocation'] && data['lHistory'])) return
 
@@ -570,16 +569,18 @@ export default {
       const op = this.$refs.op
       const op1 = this.$refs.op1
       const op2 = this.$refs.op2
-      const op3 = this.$refs.op3
+      // const op3 = this.$refs.op3
       const op4 = this.$refs.op4
       const op5 = this.$refs.op5
 
-      op.mergeOptions(this.option, true)
       op1.mergeOptions(this.option1, true)
-      op2.mergeOptions(this.option2, true)
-      op3.mergeOptions(this.option3, true)
-      op4.mergeOptions(this.option4, true)
-      op5.mergeOptions(this.option5, true)
+      if (renderAll) {
+        op.mergeOptions(this.option, true)
+        op2.mergeOptions(this.option2, true)
+        // op3.mergeOptions(this.option3, true)
+        op4.mergeOptions(this.option4, true)
+        op5.mergeOptions(this.option5, true)
+      }
 
       // 清空热力图计算数据
       this.resetHeat()
@@ -609,7 +610,7 @@ export default {
         if (data === [] || data === undefined)
           throw {'message': '数据库连接失败'}
         else
-          this.render(data)
+          this.render(data, true)
 
         setTimeout(() => {
           this.$notify.clear()
