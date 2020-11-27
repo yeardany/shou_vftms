@@ -61,11 +61,11 @@ export default {
       max_dist: 0,
       R: 6371.14,
       data_loc: [],
-      locationDescribe: '',
-      containerWidth: window.screen.width,
       //新增时间和经纬度二维数据
-      data_j:[],
-      data_w:[]
+      data_j: [],
+      data_w: [],
+      locationDescribe: '',
+      containerWidth: window.screen.width
     }
   },
   computed: {
@@ -534,19 +534,22 @@ export default {
   },
   methods: {
     render(data) {
+
+      if (!(data && data['pLocation'] && data['lHistory'])) return
+
       let
         x0 = data['oLocation'][0],
         y0 = data['oLocation'][1],
         x = data['pLocation'][0],
         y = data['pLocation'][1],
-        data_loc = data['lHistory'],
         max_dist = data['dist'],
-        date = ['00:00','00:20','00:40','01:00','01:20','01:40','02:00','02:20','02:40','03:00','03:20','03:40',
-          '04:00','04:20','04:40','05:00','05:20','05:40','06:00','06:20','06:40','07:00','07:20','07:40',
-          '08:00','08:20','08:40','09:00','09:20','09:40','10:00','10:20','10:40','11:00','11:20','11:40',
-          '12:00','12:20','12:40','13:00','13:20','13:40','14:00','14:20','14:40','15:00','15:20','15:40',
-          '16:00','16:20','16:40','17:00','17:20','17:40','18:00','18:20','18:40','19:00','19:20','19:40',
-          '20:00','20:20','20:40','21:00','21:20','21:40','22:00','22:20','22:40','23:00','23:20','23:40',];
+        data_loc = data['lHistory'].map(i => {
+          return i.data
+        }),
+        date = data['lHistory'].map(i => {
+          let time = new Date(i.time).toLocaleString().replace(/:\d{1,2}$/, '')
+          return time.slice(10)
+        })
 
       // 请求获得数据赋值
       this.x0 = x0.toFixed(3);
@@ -555,31 +558,28 @@ export default {
       this.y = y.toFixed(3);
       this.max_dist = max_dist;
       this.data_loc = data_loc;
-      this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${this.x0}°N,${this.y0}°E)<br><br>`;
+      this.locationDescribe = `图中心原点位置即为标准点坐标:<br>(${x0}°N,${y0}°E)<br><br>`;
+
       //creat data_w,data_j to use in op4,op5
-      for(let i=0;i<date.length;i++){
-        this.data_w.push([date[i],data_loc[i][0].toFixed(3)])
-        this.data_j.push([date[i],data_loc[i][1].toFixed(3)])
+      for (let i = 0; i < date.length; i++) {
+        this.data_w.push([date[i], data_loc[i][0].toFixed(3)])
+        this.data_j.push([date[i], data_loc[i][1].toFixed(3)])
       }
 
       // 手动渲染图表
       const op = this.$refs.op
       const op1 = this.$refs.op1
+      const op2 = this.$refs.op2
+      const op3 = this.$refs.op3
+      const op4 = this.$refs.op4
+      const op5 = this.$refs.op5
+
       op.mergeOptions(this.option, true)
       op1.mergeOptions(this.option1, true)
-
-      // 判断历史数据是否为空
-      if (data_loc.length !== 0) {
-
-        const op2 = this.$refs.op2
-        const op3 = this.$refs.op3
-        const op4 = this.$refs.op4
-        const op5 = this.$refs.op5
-        op2.mergeOptions(this.option2, true)
-        op3.mergeOptions(this.option3, true)
-        op4.mergeOptions(this.option4, true)
-        op5.mergeOptions(this.option5, true)
-      }
+      op2.mergeOptions(this.option2, true)
+      op3.mergeOptions(this.option3, true)
+      op4.mergeOptions(this.option4, true)
+      op5.mergeOptions(this.option5, true)
 
       // 清空热力图计算数据
       this.resetHeat()
@@ -603,12 +603,13 @@ export default {
     setTimeout(() => {
 
       axios.post(api.api.getEquipmentById, {'pushID': this.$pushID, 'id': this.$route.params.id}).then((res) => {
+
         let data = res.data
 
         if (data === [] || data === undefined)
           throw {'message': '数据库连接失败'}
-
-        this.render(data)
+        else
+          this.render(data)
 
         setTimeout(() => {
           this.$notify.clear()
