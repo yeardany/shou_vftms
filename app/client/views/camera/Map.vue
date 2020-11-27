@@ -233,9 +233,9 @@ export default {
             htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
             if ((params.value[0] === "0.00" || params.value[0] === 0.00)
               && (params.value[1] === "0.00" || params.value[1] === 0.00))
-              htmlStr += `设备位于标准点,<br>热力值为${params.value[2]}`;
+              htmlStr += `设备位于标准点,<br>热力值为${params.value[2].toFixed(2)}`;
             else
-              htmlStr += `设备在偏移至此处,<br>热力值为${params.value[2]}`;
+              htmlStr += `设备在偏移至此处,<br>热力值为${params.value[2].toFixed(2)}`;
             htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
             return htmlStr;
           }
@@ -554,6 +554,17 @@ export default {
           return time.slice(10)
         })
 
+      // 计算更新时间
+      let minute = new Date().getMinutes()
+      if (renderAll)
+        if (0 <= minute && minute < 20)
+          minute = '00'
+        else if (20 <= minute && minute < 40)
+          minute = '20'
+        else
+          minute = '40'
+      let updateIme = `当前位置更新时间:${new Date().getMonth() + 1}月${new Date().getDate()}日${new Date().getHours()}:${minute}`
+
       // 请求获得数据赋值
       this.x0 = x0.toFixed(3);
       this.y0 = y0.toFixed(3);
@@ -561,7 +572,7 @@ export default {
       this.y = y.toFixed(3);
       this.max_dist = max_dist;
       this.data_loc = data_loc;
-      this.locationDescribe = `下图中心为原始位置:(${x0}°N,${y0}°E)<br>当前位置:(${x}°N,${y}°E)`;
+      this.locationDescribe = `下图中心为原始位置:(${x0}°N,${y0}°E)<br>当前位置:(${x}°N,${y}°E)<br>${updateIme}`;
 
       //creat data_w,data_j to use in op4,op5
       for (let i = 0; i < date.length; i++) {
@@ -632,7 +643,7 @@ export default {
 <style scoped>
 span {
   display: block;
-  padding: 0 1.5%;
+  padding: 0 1.5% 1.5%;
   color: rgb(50, 50, 50)
 }
 </style>
