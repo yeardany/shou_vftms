@@ -18,12 +18,6 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op1"/>
-      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
-               manual-update
-               ref="op2"/>
-      <!--      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"-->
-      <!--               manual-update-->
-      <!--               ref="op3"/>-->
       <!--新添时间与纬度、经度关系折线图-->
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
@@ -31,6 +25,12 @@
       <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
                manual-update
                ref="op5"/>
+      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"
+               manual-update
+               ref="op2"/>
+      <!--      <v-chart :style="{width: containerWidth + 'px',height: containerWidth + 'px' }"-->
+      <!--               manual-update-->
+      <!--               ref="op3"/>-->
     </template>
   </div>
 </template>
@@ -152,7 +152,7 @@ export default {
     option1() {
       return {
         title: {
-          text: '海上设备定位图'
+          text: '设备定位图'
         },
         radiusAxis: {
           max: 50
@@ -171,17 +171,21 @@ export default {
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
               if (i === 0) {
-                htmlStr += '设备偏移距离:<br>'
-                htmlStr += parseFloat(param.value[0]).toFixed(2) + 'km<br>';
-                if (parseInt(param.value[0]) > this.max_dist) {
-                  htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
-                  htmlStr += '<div style="border: 1px solid #ff0000"></div>';
+                if (param.value[0] === undefined || param.value[0] * 1 < 0.1)
+                  htmlStr += '设备原始位置<br>'
+                else {
+                  if (param.value[0] * 1 > this.max_dist) {
+                    htmlStr += '<div style="color: #FF0000">WRANING!偏移距离过远</div>';
+                    htmlStr += '<div style="border: 1px solid #ff0000"></div>';
+                  }
+                  htmlStr += '设备偏移距离:<br>'
+                  htmlStr += (param.value[0] * 1).toFixed(3) + 'km<br>';
+                  htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+                  htmlStr += '设备偏移角度:<br>' + param.value[1] + '°';
+                  htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 }
-                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-                htmlStr += '设备偏移角度:<br>' + param.value[1] + '°';
-                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
               } else if (i === 1)
-                htmlStr += '经纬度坐标:<br>' + param.value[1];
+                htmlStr += param.value[1] === undefined ? '' : '设备位置坐标:<br>' + param.value[1];
             }
             return htmlStr;
           }
