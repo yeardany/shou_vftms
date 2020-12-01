@@ -63,6 +63,12 @@ export default {
       //新增时间和经纬度二维数据
       data_j: [],
       data_w: [],
+      //用于生成虚线坐标
+      data_j0: [],
+      data_w0: [],
+      //用于显示经度纬度的偏移距离
+      dist_jj: [],
+      dist_ww: [],
       locationDescribe: '',
       containerWidth: window.screen.width
     }
@@ -97,6 +103,13 @@ export default {
     loc() {
       return this.heat.loc
     },
+    dist_j(){
+      return this.heat.dist_j
+    },
+    dist_w(){
+      return this.heat.dist_w
+    },
+
     option() {
       return {
         xAxis: {
@@ -155,7 +168,7 @@ export default {
           text: '设备定位图'
         },
         radiusAxis: {
-          max: 50
+          max: 5
         },
         polar: {
           center: ['50%', '50%'],
@@ -410,11 +423,17 @@ export default {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              htmlStr += `时间:${param.value[0]}`;
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              htmlStr += `设备坐标纬度:<br>${param.value[1]}`;
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              if(i==0){
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+                htmlStr += `时间:${param.value[0]}`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+                htmlStr += `设备坐标纬度:<br>${param.value[1]}`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              }
+              else if(i==2){
+                htmlStr += `设备纬度偏移:<br>${param.value[1]}km`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              }
             }
             return htmlStr;
           }
@@ -452,12 +471,26 @@ export default {
         grid: {
           left: '15%'
         },
-        series: [{
-          name: 'data_w',
-          type: 'line',
-          symbolSize: 6,
-          data: this.data_w
-        }]
+        series: [
+          {
+            name: '实时纬度',
+            type: 'line',
+            symbolSize: 6,
+            data: this.data_w
+          },
+          {
+            name: '标准纬度',
+            type: 'line',
+            smooth: false,
+            symbolSize: 1,
+            data: this.data_w0,
+            itemStyle: {normal: {lineStyle: {width: 2, type: 'dotted'}}}//虚线
+          },
+          {
+            name: '纬度偏移距离',
+            type: 'line',
+            data: this.dist_ww
+          }]
       }
     },
     option5() {
@@ -465,17 +498,26 @@ export default {
         title: {
           text: '设备位置经度随时间变化图'
         },
+        legend: {
+          data: ['实时经度', '标准经度']
+        },
         tooltip: {
           trigger: 'axis',
           formatter: (params) => {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              htmlStr += `时间:${param.value[0]}`;
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              htmlStr += `设备坐标经度:<br>${param.value[1]}`;
-              htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              if(i==0){
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+                htmlStr += `时间:${param.value[0]}`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+                htmlStr += `设备坐标经度:<br>${param.value[1]}`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              }
+              else if(i==2){
+                htmlStr += `设备经度偏移:<br>${param.value[1]}km`;
+                htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
+              }
             }
             return htmlStr;
           }
@@ -513,12 +555,26 @@ export default {
         grid: {
           left: '15%'
         },
-        series: [{
-          name: 'data_j',
-          type: 'line',
-          symbolSize: 6,
-          data: this.data_j
-        }]
+        series: [
+          {
+            name: '实时经度',
+            type: 'line',
+            symbolSize: 6,
+            data: this.data_j
+          },
+          {
+            name: '标准经度',
+            type: 'line',
+            smooth:false,
+            symbolSize: 1,
+            data: this.data_j0,
+            itemStyle:{normal:{lineStyle:{width:2, type:'dotted'}}}//虚线
+          },
+          {
+            name: '经度偏移距离',
+            type: 'line',
+            data: this.dist_jj
+          }]
       }
     }
   },
@@ -578,6 +634,12 @@ export default {
       for (let i = 0; i < date.length; i++) {
         this.data_w.push([date[i], data_loc[i][0].toFixed(3)])
         this.data_j.push([date[i], data_loc[i][1].toFixed(3)])
+        this.data_j0.push([date[i], y0.toFixed(3)])
+        this.data_w0.push([date[i], x0.toFixed(3)])
+        this.dist_jj.push([date[i], this.dist_j[i]])
+        this.dist_ww.push([date[i], this.dist_w[i]])
+        /*console.log(this.dist_ww[i][0],data_loc[i][0].toFixed(3),this.dist_ww[i][1])
+        console.log(this.dist_jj[i][0],data_loc[i][1].toFixed(3),this.dist_jj[i][1])*/
       }
 
       // 手动渲染图表

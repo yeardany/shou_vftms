@@ -4,7 +4,9 @@ let
   _time = [],
   _date = '16:40',
   _loc = [],
-  _data = [];
+  _data = [],
+  _dist_j = [],
+  _dist_w = [];
 
 class heatMap {
 
@@ -61,6 +63,22 @@ class heatMap {
     _loc = v
   }
 
+  get dist_j(){
+    return _dist_j
+  }
+
+  set dist_j(v){
+    _dist_j = v
+  }
+
+  get dist_w(){
+    return _dist_w
+  }
+
+  set dist_w(v){
+    _dist_w = v
+  }
+
   getHeatMapData() {
 
     let init = this.init,
@@ -77,6 +95,9 @@ class heatMap {
       let y = data_loc[i][0].toFixed(3);
       let m_x = init.getDistance(init.x0, init.y0, init.x0, x);
       let m_y = init.getDistance(init.x0, init.y0, y, init.y0);
+      //存经度，纬度方向偏移距离，用于op4，op5
+      this.dist_j.push(m_x.toFixed(3))
+      this.dist_w.push(m_y.toFixed(3))
       //定位方向
       if (x > init.y0 && y < init.x0) {
         m_y = -m_y;
@@ -123,6 +144,8 @@ class heatMap {
     this.time = []
     this.loc = []
     this.data = []
+    this.dist_j = []
+    this.dist_w = []
   }
 }
 
