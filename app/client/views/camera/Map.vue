@@ -606,8 +606,9 @@ export default {
           return i.data
         }),
         date = data['lHistory'].map(i => {
-          let time = new Date(i.time).toLocaleString().replace(/:\d{1,2}$/, '')
-          return time.slice(10)
+          const leadingZero = (num) => `0${num}`.slice(-2),
+            d = new Date(i.time)
+          return [d.getHours(), d.getMinutes(), d.getSeconds()].map(leadingZero).join(':');
         })
 
       // 计算更新时间
