@@ -103,10 +103,10 @@ export default {
     loc() {
       return this.heat.loc
     },
-    dist_j(){
+    dist_j() {
       return this.heat.dist_j
     },
-    dist_w(){
+    dist_w() {
       return this.heat.dist_w
     },
 
@@ -417,20 +417,23 @@ export default {
         title: {
           text: '设备位置纬度随时间变化图'
         },
+        legend: {
+          data: ['实时纬度', '标准纬度'],
+          bottom: 'bottom'
+        },
         tooltip: {
           trigger: 'axis',
           formatter: (params) => {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              if(i==0){
+              if (i === 0) {
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `时间:${param.value[0]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `设备坐标纬度:<br>${param.value[1]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              }
-              else if(i==2){
+              } else if (i === 2) {
                 htmlStr += `设备纬度偏移:<br>${param.value[1]}km`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
               }
@@ -499,7 +502,8 @@ export default {
           text: '设备位置经度随时间变化图'
         },
         legend: {
-          data: ['实时经度', '标准经度']
+          data: ['实时经度', '标准经度'],
+          bottom: 'bottom'
         },
         tooltip: {
           trigger: 'axis',
@@ -507,14 +511,13 @@ export default {
             let htmlStr = '';
             for (let i = 0; i < params.length; i++) {
               let param = params[i];
-              if(i==0){
+              if (i === 0) {
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `时间:${param.value[0]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `设备坐标经度:<br>${param.value[1]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              }
-              else if(i==2){
+              } else if (i === 2) {
                 htmlStr += `设备经度偏移:<br>${param.value[1]}km`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
               }
@@ -565,10 +568,10 @@ export default {
           {
             name: '标准经度',
             type: 'line',
-            smooth:false,
+            smooth: false,
             symbolSize: 1,
             data: this.data_j0,
-            itemStyle:{normal:{lineStyle:{width:2, type:'dotted'}}}//虚线
+            itemStyle: {normal: {lineStyle: {width: 2, type: 'dotted'}}}//虚线
           },
           {
             name: '经度偏移距离',

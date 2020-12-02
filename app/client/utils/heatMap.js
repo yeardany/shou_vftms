@@ -63,19 +63,19 @@ class heatMap {
     _loc = v
   }
 
-  get dist_j(){
+  get dist_j() {
     return _dist_j
   }
 
-  set dist_j(v){
+  set dist_j(v) {
     _dist_j = v
   }
 
-  get dist_w(){
+  get dist_w() {
     return _dist_w
   }
 
-  set dist_w(v){
+  set dist_w(v) {
     _dist_w = v
   }
 
