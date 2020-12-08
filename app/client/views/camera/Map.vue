@@ -618,8 +618,8 @@ export default {
           minute = '20'
         else
           minute = '40'
-      let uploadDesc = upLoadTime === "" ? "" : `设备最后上传时间:${upLoadTime.substr(5, 11)}`,
-        updateIme = `${uploadDesc}<br>数据更新时间:${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${minute}`
+      let uploadDesc = upLoadTime === "" ? "" : `设备最后上传时间:${upLoadTime.substr(5, 11)}<br>`,
+        updateIme = `${uploadDesc}数据更新时间:${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${minute}`
 
       // 请求获得数据赋值
       this.x0 = x0.toFixed(3);
