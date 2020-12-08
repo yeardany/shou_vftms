@@ -599,16 +599,11 @@ export default {
 
       if (!(data && data['pLocation'] && data['lHistory'])) return
 
-      let
-        x0 = data['oLocation'][0],
-        y0 = data['oLocation'][1],
-        x = data['pLocation'][0],
-        y = data['pLocation'][1],
-        max_dist = data['dist'],
-        data_loc = data['lHistory'].map(i => {
+      let {oLocation: [x0, y0], pLocation: [x, y], dist: max_dist, lHistory, upLoadTime} = data,
+        data_loc = lHistory.map(i => {
           return i.data
         }),
-        date = data['lHistory'].map(i => {
+        date = lHistory.map(i => {
           const leadingZero = (num) => `0${num}`.slice(-2),
             d = new Date(i.time)
           return [d.getHours(), d.getMinutes(), d.getSeconds()].map(leadingZero).join(':');
@@ -623,7 +618,8 @@ export default {
           minute = '20'
         else
           minute = '40'
-      let updateIme = `当前位置更新时间:${new Date().getMonth() + 1}月${new Date().getDate()}日${new Date().getHours()}:${minute}`
+      let uploadDesc = upLoadTime === "" ? "" : `设备最后上传时间:${upLoadTime.substr(5, 11)}`,
+        updateIme = `${uploadDesc}<br>数据更新时间:${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${minute}`
 
       // 请求获得数据赋值
       this.x0 = x0.toFixed(3);
