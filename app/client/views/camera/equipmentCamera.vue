@@ -22,8 +22,12 @@ export default {
   },
   mounted() {
     axios.get(api.api.getEquipments).then((res) => {
+      let data = res.data
 
-      this.list = res.data
+      if (data === [] || data === undefined)
+        throw {'message': '数据库连接失败'}
+      else
+        this.list = data
 
     }).catch((e) => {
       this.$notify({type: 'warning', message: e.message, duration: 1500});
