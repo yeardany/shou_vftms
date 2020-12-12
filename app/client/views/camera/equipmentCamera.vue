@@ -21,7 +21,11 @@ export default {
     }
   },
   mounted() {
-    axios.get(api.api.getEquipments).then((res) => {
+    axios.get(api.api.getEquipments, {
+      params: {
+        aId: this.$areaID
+      }
+    }).then((res) => {
       let data = res.data
 
       if (data === [] || data === undefined)
