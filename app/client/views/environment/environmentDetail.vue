@@ -23,20 +23,14 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
+import homeModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "environmentDetail",
   data() {
     return {
       active: 0,
-      tabList: [
-        {title: '溶解氧', to: 'enO2'},
-        {title: 'PH值', to: 'enPH'},
-        {title: '水温', to: 'enTem'},
-        {title: '营养盐', to: 'enNut'},
-        {title: '透明度', to: 'enTsc'},
-        {title: '历史', to: 'chartTest'}
-      ]
+      tabList: homeModuleSet.environmentDetail
     }
   },
   components: {

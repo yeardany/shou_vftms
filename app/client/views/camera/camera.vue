@@ -20,17 +20,14 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
+import homeModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "camera",
   data() {
     return {
       active: 0,
-      tabList: [
-        {title: '养殖监测点监控', to: 'fishery'},
-        {title: '区域监控', to: 'island'},
-        {title: '海上设备监控', to: 'equipment'}
-      ]
+      tabList: homeModuleSet.camera
     };
   },
   components: {
