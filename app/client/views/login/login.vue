@@ -51,6 +51,7 @@
 import Vue from "vue";
 import axios from "axios";
 import api from "../../../config/api";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: 'login',
@@ -74,16 +75,19 @@ export default {
       if (!this.areas.has(this.value)) return
 
       axios.post(api.api.login, {uName: this.phone, uPassword: this.password, aId: this.$areaID}).then((res) => {
-        let [{"_id": id = null, "uRole": role, "uName": name}] = res.data
+        let [{"_id": id = null, "uRole": role, "uName": name, "aId": aId}] = res.data
 
         if (id === null)
           throw {'message': '登录失败'}
         else {
           Vue.prototype.$uRole = role
           Vue.prototype.$uName = name
-          this.$router.push('/home')
         }
+        return axios.post(api.api.getModuleSet, {uRole: role, aId: aId})
+      }).then((res) => {
+        new ModuleSet().sets = res.data
 
+        this.$router.push('/home')
       }).catch((e) => {
         this.$notify({type: 'warning', message: '登录失败', duration: 1500});
       })

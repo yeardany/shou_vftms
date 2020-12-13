@@ -4,6 +4,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const api = {
   'login': isDev ? '/api/login' : `${apiAddress}/login`,
+  'getModuleSet': isDev ? '/api/getModuleSet' : `${apiAddress}/getModuleSet`,
   'getEquipments': isDev ? '/api/getEquipments' : `${apiAddress}/getEquipments`,
   'getEquipmentById': isDev ? '/api/getEquipmentById' : `${apiAddress}/getEquipmentById`,
   'getInspects': isDev ? '/api/getInspects' : `${apiAddress}/getInspects`,

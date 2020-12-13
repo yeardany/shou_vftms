@@ -12,7 +12,7 @@
 
 <script>
 
-import homeModuleSet from '../../../config/moduleSet'
+import ModuleSet from '../../../config/moduleSet'
 
 export default {
   name: 'home',
@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted() {
-    this.tabList = homeModuleSet.home
+    this.tabList = new ModuleSet().sets.home
     this.loading = false;
   },
   watch: {

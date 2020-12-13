@@ -23,14 +23,14 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
-import homeModuleSet from "../../../config/moduleSet";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "environmentDetail",
   data() {
     return {
       active: 0,
-      tabList: homeModuleSet.environmentDetail
+      tabList: new ModuleSet().sets.environmentDetail
     }
   },
   components: {

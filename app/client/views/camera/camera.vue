@@ -20,14 +20,14 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
-import homeModuleSet from "../../../config/moduleSet";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "camera",
   data() {
     return {
       active: 0,
-      tabList: homeModuleSet.camera
+      tabList: new ModuleSet().sets.camera
     };
   },
   components: {
