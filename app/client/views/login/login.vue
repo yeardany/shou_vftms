@@ -49,14 +49,16 @@
 <script>
 
 import Vue from "vue";
+import axios from "axios";
+import api from "../../../config/api";
 
 export default {
   name: 'login',
   data() {
     return {
-      phone: '',
+      phone: '13812345678',
       pattern: /^1[3456789]\d{9}$/,
-      password: '',
+      password: '123',
       value: '',
       areas: new Map([["桑沟湾", "sgw"], ["獐子岛", "zzd"]]),
       showPicker: false,
@@ -69,8 +71,22 @@ export default {
       this.showPicker = false;
     },
     onSubmit(values) {
-      if (this.areas.has(this.value))
-        this.$router.push('/home')
+      if (!this.areas.has(this.value)) return
+
+      axios.post(api.api.login, {uName: this.phone, uPassword: this.password, aId: this.$areaID}).then((res) => {
+        let [{"_id": id = null, "uRole": role, "uName": name}] = res.data
+
+        if (id === null)
+          throw {'message': '登录失败'}
+        else {
+          Vue.prototype.$uRole = role
+          Vue.prototype.$uName = name
+          this.$router.push('/home')
+        }
+
+      }).catch((e) => {
+        this.$notify({type: 'warning', message: '登录失败', duration: 1500});
+      })
     }
   },
   computed: {

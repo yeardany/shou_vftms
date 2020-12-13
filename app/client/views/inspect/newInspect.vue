@@ -76,15 +76,15 @@ export default {
   methods: {
     onSubmit(values) {
 
-      let params = new URLSearchParams();
-      params.append('iName', this.inspectName);
-      params.append('iWho', '巡检员01');
-      params.append('iLength', this.length);
-      params.append('iWeight', this.weight);
-      params.append('other', this.ps);
-      params.append('time', new Date().getTime());
-
-      axios.post(api.api.addInspects, params).then((res) => {
+      axios.post(api.api.addInspects, {
+        iName: this.inspectName,
+        iWho: this.$uName,
+        iLength: this.length,
+        iWeight: this.weight,
+        other: this.ps,
+        time: new Date().getTime(),
+        aId: this.$areaID
+      }).then((res) => {
         if (res.data['_id'] !== undefined)
           this.$notify({
             type: 'primary',
