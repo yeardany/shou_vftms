@@ -7,8 +7,7 @@
     </NavBar>
     <div class="tab">
       <van-tabs v-model="active" animated swipeable color="#1989fa" sticky>
-        <van-tab v-for="(item,index) in [{title:'养殖监测点监控',to:'fishery'},{title:'区域监控',to:'island'},
-        {title:'海上设备监控',to:'equipment'}]"
+        <van-tab v-for="(item,index) in tabList"
                  :key="index"
                  :title="item.title"
                  :to="item.to">
@@ -27,6 +26,11 @@ export default {
   data() {
     return {
       active: 0,
+      tabList: [
+        {title: '养殖监测点监控', to: 'fishery'},
+        {title: '区域监控', to: 'island'},
+        {title: '海上设备监控', to: 'equipment'}
+      ]
     };
   },
   components: {

@@ -4,10 +4,8 @@
       <router-view></router-view>
     </van-skeleton>
     <van-tabbar route>
-      <van-tabbar-item icon="video-o" replace :to="toPath">在线视频</van-tabbar-item>
-      <van-tabbar-item icon="fire-o" replace to="/home/environment">水质环境</van-tabbar-item>
-      <van-tabbar-item icon="notes-o" replace to="/home/inspect">生长巡检</van-tabbar-item>
-      <van-tabbar-item icon="flower-o" replace to="/home/weather">基地气象</van-tabbar-item>
+      <van-tabbar-item v-for="item in tabList" :key="item.id" :icon="item.icon" replace :to="item.to">{{ item.des }}
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -22,11 +20,14 @@ export default {
       toPath: '/home/camera/fishery'
     }
   },
-  components: {},
-  computed: {},
-  methods: {
-    go() {
-      this.$router.push('/login')
+  computed: {
+    tabList() {
+      return [
+        {id: 1, icon: "video-o", to: this.toPath, des: "在线视频"},
+        {id: 2, icon: "fire-o", to: "/home/environment", des: "水质环境"},
+        {id: 3, icon: "notes-o", to: "/home/inspect", des: "生长巡检"},
+        {id: 4, icon: "flower-o", to: "/home/weather", des: "基地气象"}
+      ]
     }
   },
   mounted() {
