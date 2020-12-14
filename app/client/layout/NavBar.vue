@@ -16,15 +16,22 @@
 export default {
   name: "NavBar",
   data() {
-    return {}
+    return {
+      backPath: '/home'
+    }
   },
   props: {
     methodName: String,
     required: true
   },
+  watch: {
+    $route(to, from) {
+      this.backPath = from.fullPath
+    }
+  },
   methods: {
     back() {
-      this.$router.push('/home')
+      this.$router.push(this.backPath)
     },
     method(name) {
       switch (name) {

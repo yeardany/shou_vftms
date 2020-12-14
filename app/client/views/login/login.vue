@@ -96,6 +96,10 @@ export default {
       password: '123',
       value: '',
       areas: new Map([["桑沟湾", "sgw"], ["獐子岛", "zzd"]]),
+      roleTxt: {
+        user: '养殖员',
+        admin: '管理员'
+      },
       showPicker: false,
       popUp: false,
     };
@@ -123,6 +127,7 @@ export default {
         let {home = [], camera = [], environmentDetail = []} = res.data
         if (home === [] || camera === [] || environmentDetail === []) throw {error: ''}
         new ModuleSet().sets = res.data
+        this.$notify({type: 'primary', message: `欢迎，${this.roleTxt[this.$uRole]}:${this.$uName}`});
         this.$router.push(home[0].to)
       }).catch((e) => {
         this.$notify({type: 'warning', message: '登录失败', duration: 1500});
