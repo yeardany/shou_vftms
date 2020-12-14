@@ -120,9 +120,10 @@ export default {
         }
         return axios.post(api.api.getModuleSet, {uRole: role, aId: aId})
       }).then((res) => {
+        let {home = [], camera = [], environmentDetail = []} = res.data
+        if (home === [] || camera === [] || environmentDetail === []) throw {error: ''}
         new ModuleSet().sets = res.data
-
-        this.$router.push('/home')
+        this.$router.push(home[0].to)
       }).catch((e) => {
         this.$notify({type: 'warning', message: '登录失败', duration: 1500});
       })
