@@ -13,21 +13,18 @@
 </template>
 
 <script>
+import ModuleSet from "../../config/moduleSet";
+
 export default {
   name: "NavBar",
   data() {
     return {
-      backPath: '/home'
+      backPath: new ModuleSet().sets.home[0].to
     }
   },
   props: {
     methodName: String,
     required: true
-  },
-  watch: {
-    $route(to, from) {
-      this.backPath = from.fullPath
-    }
   },
   methods: {
     back() {
