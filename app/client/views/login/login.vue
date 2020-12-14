@@ -42,7 +42,41 @@
           登录
         </van-button>
       </div>
+      <!--    弹出说明-->
+      <div style="margin: 16px;">
+        <van-button round block type="warning" @click="showPopup">
+          必看说明
+        </van-button>
+      </div>
     </van-form>
+    <!--    弹出说明-->
+    <van-popup v-model="popUp" position="bottom" :style="{ height: '30%' }">
+      登录账号：
+      <van-row>
+        <van-col span="12">13811111111</van-col>
+        <van-col span="4">123</van-col>
+        <van-col span="4">桑沟湾</van-col>
+        <van-col span="4">管理员</van-col>
+      </van-row>
+      <van-row>
+        <van-col span="12">13822222222</van-col>
+        <van-col span="4">123</van-col>
+        <van-col span="4">桑沟湾</van-col>
+        <van-col span="4">用户</van-col>
+      </van-row>
+      <van-row>
+        <van-col span="12">13833333333</van-col>
+        <van-col span="4">123</van-col>
+        <van-col span="4">獐子岛</van-col>
+        <van-col span="4">管理员</van-col>
+      </van-row>
+      <van-row>
+        <van-col span="12">13844444444</van-col>
+        <van-col span="4">123</van-col>
+        <van-col span="4">獐子岛</van-col>
+        <van-col span="4">用户</van-col>
+      </van-row>
+    </van-popup>
   </section>
 </template>
 
@@ -57,12 +91,13 @@ export default {
   name: 'login',
   data() {
     return {
-      phone: '13812345678',
+      phone: '13811111111',
       pattern: /^1[3456789]\d{9}$/,
       password: '123',
       value: '',
       areas: new Map([["桑沟湾", "sgw"], ["獐子岛", "zzd"]]),
       showPicker: false,
+      popUp: false,
     };
   },
   methods: {
@@ -91,6 +126,9 @@ export default {
       }).catch((e) => {
         this.$notify({type: 'warning', message: '登录失败', duration: 1500});
       })
+    },
+    showPopup() {
+      this.popUp = true;
     }
   },
   computed: {
