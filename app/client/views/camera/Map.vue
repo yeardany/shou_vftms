@@ -433,7 +433,7 @@ export default {
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `设备坐标纬度:<br>${param.value[1]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              } else if (i === 2) {
+              } else if (i === 1) {
                 htmlStr += `设备纬度偏移:<br>${param.value[1]}km`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
               }
@@ -456,8 +456,8 @@ export default {
           },
         },
         yAxis: {
-          min: 30,
-          max: 31,
+          min: parseFloat(this.x0)-0.5,
+          max: parseFloat(this.x0)+0.5,
           type: 'value',
           axisLine: {
             onZero: true,
@@ -479,15 +479,24 @@ export default {
             name: '实时纬度（当前位置）',
             type: 'line',
             symbolSize: 6,
-            data: this.data_w
-          },
-          {
-            name: '实际纬度（原始位置）',
-            type: 'line',
-            smooth: false,
-            symbolSize: 1,
-            data: this.data_w0,
-            itemStyle: {normal: {lineStyle: {width: 2, type: 'dotted'}}}//虚线
+            data: this.data_w,
+            markLine:{
+              symbol: ['none', 'none'],
+              data: [{
+                name: '原始位置',
+                yAxis: this.x0
+              }],
+              silent: false,
+              lineStyle: {
+                type: "dashed",
+                color:"#000000"
+              },
+              label:{
+                position:'end',
+                formatter:this.x0,
+                fontSize:'10'
+              },
+            }
           },
           {
             name: '纬度偏移距离',
@@ -517,7 +526,7 @@ export default {
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
                 htmlStr += `设备坐标经度:<br>${param.value[1]}`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
-              } else if (i === 2) {
+              } else if (i === 1) {
                 htmlStr += `设备经度偏移:<br>${param.value[1]}km`;
                 htmlStr += '<div style="border: 1px solid #FFEB3B"></div>';
               }
@@ -540,8 +549,8 @@ export default {
           },
         },
         yAxis: {
-          min: 121.5,
-          max: 122.5,
+          min: parseFloat(this.y0)-0.5,
+          max: parseFloat(this.y0)+0.5,
           type: 'value',
           axisLine: {
             onZero: true,
@@ -563,15 +572,24 @@ export default {
             name: '实时经度（当前位置）',
             type: 'line',
             symbolSize: 6,
-            data: this.data_j
-          },
-          {
-            name: '实际经度（原始位置）',
-            type: 'line',
-            smooth: false,
-            symbolSize: 1,
-            data: this.data_j0,
-            itemStyle: {normal: {lineStyle: {width: 2, type: 'dotted'}}}//虚线
+            data: this.data_j,
+            markLine:{
+              symbol: ['none', 'none'],
+              data: [{
+                name: '原始位置',
+                yAxis: this.y0
+              }],
+              silent: false,
+              lineStyle: {
+                type: "dashed",
+                color:"#000000"
+              },
+              label:{
+                position:'end',
+                formatter:this.y0,
+                fontSize:'10'
+              },
+            }
           },
           {
             name: '经度偏移距离',
@@ -628,7 +646,7 @@ export default {
       this.y = y.toFixed(3);
       this.max_dist = max_dist;
       this.data_loc = data_loc;
-      this.locationDescribe = `下图中心为原始位置:(${x0}°N,${y0}°E)<br>当前位置:(${x}°N,${y}°E)<br>${updateIme}`;
+      this.locationDescribe = `下图中心为原始位置:(${this.x0}°N,${this.y0}°E)<br>当前位置:(${this.x}°N,${this.y}°E)<br>${updateIme}`;
 
       //creat data_w,data_j to use in op4,op5
       for (let i = 0; i < date.length; i++) {
