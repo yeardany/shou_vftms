@@ -91,7 +91,7 @@ export default {
   name: 'login',
   data() {
     return {
-      phone: '13811111111',
+      phone: '13833333333',
       pattern: /^1[3456789]\d{9}$/,
       password: '123',
       value: '',

@@ -418,7 +418,7 @@ export default {
           text: '设备位置纬度随时间变化图'
         },
         legend: {
-          data: ['实时纬度', '标准纬度'],
+          data: ['实时纬度（当前位置）', '实际纬度（原始位置）'],
           bottom: 'bottom'
         },
         tooltip: {
@@ -476,13 +476,13 @@ export default {
         },
         series: [
           {
-            name: '实时纬度',
+            name: '实时纬度（当前位置）',
             type: 'line',
             symbolSize: 6,
             data: this.data_w
           },
           {
-            name: '标准纬度',
+            name: '实际纬度（原始位置）',
             type: 'line',
             smooth: false,
             symbolSize: 1,
@@ -502,7 +502,7 @@ export default {
           text: '设备位置经度随时间变化图'
         },
         legend: {
-          data: ['实时经度', '标准经度'],
+          data: ['实时经度（当前位置）', '实际经度（原始位置）'],
           bottom: 'bottom'
         },
         tooltip: {
@@ -560,13 +560,13 @@ export default {
         },
         series: [
           {
-            name: '实时经度',
+            name: '实时经度（当前位置）',
             type: 'line',
             symbolSize: 6,
             data: this.data_j
           },
           {
-            name: '标准经度',
+            name: '实际经度（原始位置）',
             type: 'line',
             smooth: false,
             symbolSize: 1,
