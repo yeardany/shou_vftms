@@ -63,9 +63,6 @@ export default {
       //新增时间和经纬度二维数据
       data_j: [],
       data_w: [],
-      //用于生成虚线坐标
-      data_j0: [],
-      data_w0: [],
       //用于显示经度纬度的偏移距离
       dist_jj: [],
       dist_ww: [],
@@ -418,7 +415,7 @@ export default {
           text: '设备位置纬度随时间变化图'
         },
         legend: {
-          data: ['实时纬度（当前位置）', '实际纬度（原始位置）'],
+          data: ['实时纬度（当前位置）'],
           bottom: 'bottom'
         },
         tooltip: {
@@ -494,7 +491,7 @@ export default {
               label:{
                 position:'end',
                 formatter:this.x0,
-                fontSize:'10'
+                fontSize:'9'
               },
             }
           },
@@ -511,7 +508,7 @@ export default {
           text: '设备位置经度随时间变化图'
         },
         legend: {
-          data: ['实时经度（当前位置）', '实际经度（原始位置）'],
+          data: ['实时经度（当前位置）'],
           bottom: 'bottom'
         },
         tooltip: {
@@ -587,7 +584,7 @@ export default {
               label:{
                 position:'end',
                 formatter:this.y0,
-                fontSize:'10'
+                fontSize:'9'
               },
             }
           },
@@ -652,12 +649,8 @@ export default {
       for (let i = 0; i < date.length; i++) {
         this.data_w.push([date[i], data_loc[i][0].toFixed(3)])
         this.data_j.push([date[i], data_loc[i][1].toFixed(3)])
-        this.data_j0.push([date[i], y0.toFixed(3)])
-        this.data_w0.push([date[i], x0.toFixed(3)])
         this.dist_jj.push([date[i], this.dist_j[i]])
         this.dist_ww.push([date[i], this.dist_w[i]])
-        /*console.log(this.dist_ww[i][0],data_loc[i][0].toFixed(3),this.dist_ww[i][1])
-        console.log(this.dist_jj[i][0],data_loc[i][1].toFixed(3),this.dist_jj[i][1])*/
       }
 
       // 手动渲染图表
