@@ -95,7 +95,7 @@ export default {
       pattern: /^1[3456789]\d{9}$/,
       password: '123',
       value: '',
-      areas: new Map([["桑沟湾", "sgw"], ["獐子岛", "zzd"]]),
+      areas: new Map([["獐子岛", "zzd"], ["桑沟湾", "sgw"]]),
       roleTxt: {
         user: '养殖员',
         admin: '管理员'
