@@ -72,7 +72,7 @@ import SvgIcon from '../../layout/SvgIcon.vue'
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import axios from 'axios'
-import {Skeleton} from 'vant';
+import api from '../../../config/api'
 
 export default {
   name: 'weatherDetail',
@@ -102,7 +102,10 @@ export default {
     this.$notify({type: 'primary', message: '加载中...', duration: 0});
 
     setTimeout(() => {
-      axios.get("https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=101121301",
+
+      let areaId = this.$areaID
+
+      axios.get(`https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=${api.weatherId[areaId]}`,
       ).then((d) => {
         let resData = d.data,
           weatherData = resData.data,

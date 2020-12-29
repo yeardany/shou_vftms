@@ -11,8 +11,14 @@ const api = {
   'addInspects': isDev ? '/api/addInspect' : `${apiAddress}/addInspect`
 }
 
+const weatherId = {
+  "zzd": "101070201", // 大连獐子岛
+  "sgw": "101121301" // 威海桑沟湾
+}
+
 module.exports = {
   socketAddress: socketAddress,
   apiAddress: apiAddress,
-  api: api
+  api: api,
+  weatherId: weatherId
 }
