@@ -7,12 +7,8 @@
     </van-grid-item>
   </van-grid>-->
   <div>
-    <div class="f1 mapDiv">
-      <div class="mapCon">
-        <div class="title">监测区域分布</div>
-        <v-chart class="mapChart" manual-update ref="myecharts"/>
-      </div>
-    </div>
+    <div class="title">监测区域分布</div>
+    <v-chart class="mapChart" :style="chartStyle" manual-update ref="myecharts"/>
   </div>
 </template>
 
@@ -22,7 +18,6 @@ import echarts from 'vue-echarts'
 import china from 'echarts/map/json/china.json'
 import 'echarts/map/js/china.js'
 import 'echarts-gl/dist/echarts-gl.js'
-
 
 export default {
   name: "fishCamera",
@@ -42,6 +37,10 @@ export default {
         {id: '6', name: '渔排3号'},
         {id: '7', name: '渔排4号'}
       ]*/
+      chartStyle: {
+        height: window.screen.height - 150 + 'px',
+        width: window.screen.width + 'px'
+      },
       list: [
         {name: '渔排1号', value: [123.72, 39.07]},
         {name: '福鲍1号', value: [123.33, 39.22]},
@@ -51,7 +50,6 @@ export default {
     }
   },
   computed: {
-
     option() {
       return {
         backgroundColor: '#fff',
@@ -61,21 +59,19 @@ export default {
           formatter: (params) => {
             this.$dialog.confirm({
               title: '监控详情',
-              message: '獐子岛-'+ params.name + '\n' +  params.value[0] + '°E, ' + params.value[1] + '°N',
-              confirmButtonText: '查看'
+              message: '獐子岛-' + params.name + '\n' + params.value[0] + '°E, ' + params.value[1] + '°N',
+              confirmButtonText: '查看监控'
             }).then(() => {
               this.$router.push('/cameraDetail')
-              }).catch(() => {
-                // on cancel
-              });
+            })
           }
         },
         geo: {
           map: "china",
           layoutCenter: ['20%', '50%'],
-          layoutSize: 1600,
+          layoutSize: 2200,
           roam: true,
-          center: [122, 38],
+          center: [120, 39],
           scaleLimit: {
             min: 2,
             max: 6
@@ -84,7 +80,7 @@ export default {
             normal: {
               borderWidth: 1,
               areaColor: "rgb(234,233,233)",
-              borderColor: "#3CC3FF"
+              borderColor: "rgb(25, 137, 250)"
             }
           }
         },
@@ -105,7 +101,7 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: "#088ccd",
+                color: "rgb(25, 137, 250)",
                 shadowBlur: 10,
                 shadowColor: "#0da3ea"
               }
@@ -140,28 +136,16 @@ export default {
 </script>
 
 <style scoped>
-.mapDiv {
-  width: 50%;
-  height: 50%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.mapCon .title {
+.title {
   position: absolute;
   z-index: 1;
   height: 34px;
   line-height: 34px;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
+  color: #323233;
   padding-left: 14px;
-  border-left: 6px solid #abd3d5;
+  border-left: 3px solid rgb(25, 137, 250);
   box-sizing: border-box;
-}
-
-.mapCon,
-.mapChart {
-  height: 800px;
-  width: 800px;
 }
 </style>
