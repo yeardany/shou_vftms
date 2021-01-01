@@ -63,6 +63,8 @@ export default {
               confirmButtonText: '查看监控'
             }).then(() => {
               this.$router.push('/cameraDetail')
+            }).catch(() => {
+              console.log('取消')
             })
           }
         },
