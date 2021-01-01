@@ -106,30 +106,47 @@ export default {
   },
   methods: {
     onConfirm(value) {
+
       this.value = value;
-      Vue.prototype.$areaID = this.areas.get(value)
       this.showPicker = false;
+      new ModuleSet().areaID = this.areas.get(value)
+
     },
     onSubmit(values) {
+
       if (!this.areas.has(this.value)) return
 
-      axios.post(api.api.login, {uName: this.phone, uPassword: this.password, aId: this.$areaID}).then((res) => {
+      axios.post(api.api.login, {
+        uName: this.phone,
+        uPassword: this.password,
+        aId: new ModuleSet().areaID
+      }).then((res) => {
+
         let [{"_id": id = null, "uRole": role, "uName": name, "aId": aId}] = res.data
 
         if (id === null)
           throw {'message': '登录失败'}
         else {
-          Vue.prototype.$uRole = role
-          Vue.prototype.$uName = name
+          new ModuleSet().uName = name;
+          new ModuleSet().uRole = role;
         }
+
         return axios.post(api.api.getModuleSet, {uRole: role, aId: aId})
+
       }).then((res) => {
+
         let {home = [], camera = [], environmentDetail = []} = res.data
         if (home === [] || camera === [] || environmentDetail === []) throw {error: ''}
-        new ModuleSet().sets = res.data
-        this.$notify({type: 'primary', message: `欢迎，${this.roleTxt[this.$uRole]}:${this.$uName}`});
+
+        let moduleSet = new ModuleSet()
+        moduleSet.sets = res.data
+        moduleSet.homePath = home[0].to;
+
+        this.$notify({type: 'primary', message: `欢迎，${this.roleTxt[moduleSet.uRole]}:${moduleSet.uName}`});
         this.$router.push(home[0].to)
+
       }).catch((e) => {
+
         this.$notify({type: 'warning', message: '登录失败', duration: 1500});
       })
     },

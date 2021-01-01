@@ -12,6 +12,7 @@
 
 import axios from "axios";
 import api from "../../../config/api";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "equipmentCamera",
@@ -23,7 +24,7 @@ export default {
   mounted() {
     axios.get(api.api.getEquipments, {
       params: {
-        aId: this.$areaID
+        aId: new ModuleSet().areaID
       }
     }).then((res) => {
       let data = res.data

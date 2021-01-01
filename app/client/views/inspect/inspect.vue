@@ -23,6 +23,7 @@
 import NavBar from '../../layout/NavBar.vue'
 import axios from "axios";
 import api from "../../../config/api";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "inspect",
@@ -57,7 +58,7 @@ export default {
   mounted() {
     axios.get(api.api.getInspects, {
       params: {
-        aId: this.$areaID
+        aId: new ModuleSet().areaID
       }
     }).then((res) => {
       let data = res.data

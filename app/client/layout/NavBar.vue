@@ -13,13 +13,14 @@
 </template>
 
 <script>
+
 import ModuleSet from "../../config/moduleSet";
 
 export default {
   name: "NavBar",
   data() {
     return {
-      backPath: new ModuleSet().sets.home[0].to
+      backPath: new ModuleSet().homePath
     }
   },
   props: {

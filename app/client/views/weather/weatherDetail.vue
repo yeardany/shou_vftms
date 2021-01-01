@@ -73,6 +73,7 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import axios from 'axios'
 import api from '../../../config/api'
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: 'weatherDetail',
@@ -103,7 +104,7 @@ export default {
 
     setTimeout(() => {
 
-      let areaId = this.$areaID
+      let areaId = new ModuleSet().areaID
 
       axios.get(`https://www.tianqiapi.com/api?version=v1&appid=52924758&appsecret=dtZx2xcn&cityid=${api.weatherId[areaId]}`,
       ).then((d) => {

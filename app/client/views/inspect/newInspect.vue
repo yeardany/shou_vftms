@@ -61,6 +61,7 @@
 import NavBar from '../../layout/NavBar.vue'
 import axios from "axios";
 import api from "../../../config/api";
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "newInspect",
@@ -78,12 +79,12 @@ export default {
 
       axios.post(api.api.addInspects, {
         iName: this.inspectName,
-        iWho: this.$uName,
+        iWho: new ModuleSet().uName,
         iLength: this.length,
         iWeight: this.weight,
         other: this.ps,
         time: new Date().getTime(),
-        aId: this.$areaID
+        aId: new ModuleSet().areaID
       }).then((res) => {
         if (res.data['_id'] !== undefined)
           this.$notify({
