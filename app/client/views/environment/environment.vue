@@ -17,19 +17,28 @@
 
 <script>
 import NavBar from '../../layout/NavBar.vue'
+import ModuleSet from "../../../config/moduleSet";
 
 export default {
   name: "environment",
   data() {
     return {
-      list: [
+      areas: new Map([["zzd", "獐子岛"], ["sgw", "桑沟湾"]])
+    }
+  },
+  computed: {
+    getAreaName() {
+      return this.areas.get(new ModuleSet().areaID)
+    },
+    list() {
+      return [
         {
-          name: '桑沟湾1号监测点水质',
+          name: `${this.getAreaName}1号监测点水质`,
           temperature: '温度：14.50℃',
           time: '2020/11/10 18:31:18 更新'
         },
         {
-          name: '桑沟湾2号监测点水质',
+          name: `${this.getAreaName}2号监测点水质`,
           temperature: '温度：15.50℃',
           time: '2020/11/12 11:20:06 更新'
         },
