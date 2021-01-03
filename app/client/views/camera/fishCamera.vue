@@ -50,7 +50,7 @@ export default {
           layoutCenter: ['20%', '50%'],
           layoutSize: 2200,
           roam: true,
-          center: [122.5, 39],
+          center: [122, 39],
           scaleLimit: {
             min: 2,
             max: 6
