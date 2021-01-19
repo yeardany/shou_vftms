@@ -28,7 +28,7 @@ export default {
   mounted() {
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container',
-      accessToken: 'at.0j60sxlk8qdulp60dmfu4iq37co4zqpz-58fuatumre-11wpg7m-qicy7zinq',
+      accessToken: 'at.3lnr407s1ptw6obsdya0sukrcxxahc7b-4u9f9z3ne3-0gyizkq-aav46sytx',
       url: 'ezopen://open.ys7.com/109715580/1.hd.live',
       autoplay: false,
       width: window.screen.width,
