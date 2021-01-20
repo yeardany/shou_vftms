@@ -70,7 +70,7 @@ export default {
             coordinateSystem: "geo",
             data: this.list,
             triggerEvent: true,
-            symbolSize: 8,
+            symbolSize: 12,
             label: {
               normal: {
                 formatter: "{b}",
