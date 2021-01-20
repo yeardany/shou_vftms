@@ -41,12 +41,6 @@ let app = {
   initialize: function () {
     window.document.addEventListener('deviceready', () => {
 
-      if (device.platform === "Android") {
-        StatusBar.overlaysWebView(false);
-        StatusBar.backgroundColorByName('white');
-        StatusBar.styleDefault();
-      }
-
       new Vue({
         router,
         render: (h) => h(App)

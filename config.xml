@@ -43,7 +43,6 @@
         <variable name="CHANNEL" value="developer-default" />
     </plugin>
     <plugin name="cordova-plugin-code-push" spec="^1.13.1" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^5.0.0">
         <preference name="ResolveServiceWorkerRequests" value="true" />
     </plugin>

@@ -23,7 +23,6 @@
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-jcore": "^1.3.3",
     "cordova-plugin-splashscreen": "^6.0.0",
-    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-whitelist": "1",
     "cordova-plugin-zip": "^3.1.0",
     "jpush": "^0.3.2",
@@ -41,7 +40,6 @@
         "CHANNEL": "developer-default"
       },
       "cordova-plugin-code-push": {},
-      "cordova-plugin-statusbar": {},
       "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
