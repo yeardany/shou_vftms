@@ -12,7 +12,93 @@
   <component name="ChangeListManager">
     <list default="true" id="1847d4ae-018a-4b8b-ae42-8eb182aca101" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/views/camera/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/views/camera/Map.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.babelrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.eslintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/doc-loader.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/doc-loader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/vue-loader.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/vue-loader.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/webpack.config.base.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/webpack.config.base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/webpack.config.client.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/webpack.config.client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/app.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/app.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.eot" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/iconfont/iconfont.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/iconfont/iconfont.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/images/bg.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/images/bg.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/images/done.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/images/done.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/images/round.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/images/round.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/assets/images/weather_icon_qing.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client/assets/images/weather_icon_qing.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/index-build.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/index-build.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/layout/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/layout/NavBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/layout/SvgIcon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/layout/SvgIcon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/router/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/router/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/template-build.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/template-build.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/template-dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/template-dev.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/utils/heatMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/utils/heatMap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/utils/locationCompute.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/utils/locationCompute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/Map.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/camera.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/camera.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/cameraDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/cameraDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/equipmentCamera.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/equipmentCamera.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/fishCamera.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/fishCamera.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/camera/islandCamera.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/camera/islandCamera.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/chartTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/chartTest.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentNut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentNut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentO2.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentO2.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentPH.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentPH.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentTemperature.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentTemperature.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/environment/environmentTsc.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/environment/environmentTsc.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/home/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/home/home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/inspect/inspect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/inspect/inspect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/inspect/inspectDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/inspect/inspectDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/inspect/newInspect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/inspect/newInspect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/login/registration.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/login/registration.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/weather/weather.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/weather/weather.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/views/weather/weatherDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/views/weather/weatherDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/moduleSet.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/moduleSet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hooks/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/icon/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-hdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-ldpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-mdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-xhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-xxhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-land-xxxhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-hdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-ldpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-mdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-xhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-xxhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/android/splash/drawable-port-xxxhdpi/screen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/runtime.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/vendor.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +116,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -57,6 +144,8 @@
       <workItem from="1599830255257" duration="235000" />
       <workItem from="1601560432210" duration="1788000" />
       <workItem from="1601562434774" duration="440000" />
+      <workItem from="1611400901269" duration="412000" />
+      <workItem from="1611401350762" duration="329000" />
     </task>
     <servers />
   </component>
@@ -79,11 +168,5 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/app" />
     </ignored-roots>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="141" y="27" key="SettingsEditor" timestamp="1601562448035">
-      <screen x="0" y="23" width="1280" height="730" />
-    </state>
-    <state x="141" y="27" key="SettingsEditor/0.23.1280.730@0.23.1280.730" timestamp="1601562448035" />
   </component>
 </project>
